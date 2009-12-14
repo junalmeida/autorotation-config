@@ -483,7 +483,7 @@
         {
             "{605BE39E-5046-48BD-AEC0-63C3A46626D5}:_5CC28A13043D4BE9A13FAF52EE5E4C03"
             {
-            "SourcePath" = "8:..\\AutoRotationConfig\\obj\\Debug\\AutoRotationConfig.exe"
+            "SourcePath" = "8:..\\AutoRotationConfig\\obj\\DebugSamsung\\AutoRotationConfig.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CB3EF229B45A45FCA8C9D72851AEC867"

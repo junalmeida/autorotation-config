@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Win32;
@@ -7,17 +6,43 @@ using System.Diagnostics;
 
 namespace AutoRotationConfig
 {
+    public enum Device
+    {
+        Samsung,
+        Htc
+    }
+
     public class RotationConfig
     {
+        public Device Device
+        {
+            get
+            {
+#if SAMSUNG
+                return Device.Samsung;
+#else
+                return Device.Htc;
+#endif
+            }
+        }
+#if SAMSUNG
         const string RegPath = "Software\\AutoRotation";
         const string CountValue = "Count";
         const string DisabledValue = "disable";
         const string ProcessName = "RotationSupport.exe";
+#else
+
+#endif
 
 
         private RegistryKey GetKey(bool write)
         {
-            RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(RegPath, write);
+#if SAMSUNG
+            RegistryKey key = Microsoft.Win32.Registry.LocalMachine;
+#else
+            RegistryKey key = Microsoft.Win32.Registry.CurrentUser;
+#endif
+            key = key.OpenSubKey(RegPath, write);
 #if DEBUG
             if (key == null)
             {
