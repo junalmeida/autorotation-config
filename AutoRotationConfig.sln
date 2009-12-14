@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRotationConfig", "AutoRotationConfig\AutoRotationConfig.csproj", "{6C022554-2806-4595-BDD4-08DB036DB2AD}"
 EndProject
+Project("{B900F1C2-3D47-4FEC-85B3-04AAF18C3634}") = "Setup", "Setup\Setup.vddproj", "{7049ABFA-D947-4871-828E-E070DAE9F308}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{6C022554-2806-4595-BDD4-08DB036DB2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C022554-2806-4595-BDD4-08DB036DB2AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C022554-2806-4595-BDD4-08DB036DB2AD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7049ABFA-D947-4871-828E-E070DAE9F308}.Debug|Any CPU.ActiveCfg = Debug
+		{7049ABFA-D947-4871-828E-E070DAE9F308}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

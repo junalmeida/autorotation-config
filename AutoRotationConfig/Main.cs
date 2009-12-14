@@ -73,13 +73,14 @@ namespace AutoRotationConfig
         private void ReloadAutoRotate()
         {
             StringBuilder debug = new StringBuilder();
-            List<ToolHelp.Structs.PROCESSENTRY32> list = ToolHelp.GetRunningProcesses();
-            foreach (ToolHelp.Structs.PROCESSENTRY32 p in list)
+
+            IList<OpenNETCF.ToolHelp.ProcessEntry> list = OpenNETCF.ToolHelp.ProcessEntry.GetProcesses();
+            foreach (OpenNETCF.ToolHelp.ProcessEntry p in list)
             {
-                debug.Append(p.szExeFile + "\r\n");
-                if (p.szExeFile.ToLower() == ProcessName.ToLower())
+                debug.Append(p.ExeFile + "\r\n");
+                if (p.ExeFile.ToLower() == ProcessName.ToLower())
                 {
-                    ProcessEnumerator.KillProcess(p.th32ProcessID);
+                    p.Kill();
                     Process.Start("\\windows\\" + ProcessName, null);
                     break;
                 }
