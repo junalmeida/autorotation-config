@@ -66,23 +66,25 @@ namespace AutoRotationConfig
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            ReloadAutoRotate();
             timer1.Enabled = false;
+            ReloadAutoRotate();
         }
 
         private void ReloadAutoRotate()
         {
-            List<ProcEntry> list = new List<ProcEntry>();
-            ProcessEnumerator.Enumerate(ref list);
-            foreach (ProcEntry p in list)
+            StringBuilder debug = new StringBuilder();
+            List<ToolHelp.Structs.PROCESSENTRY32> list = ToolHelp.GetRunningProcesses();
+            foreach (ToolHelp.Structs.PROCESSENTRY32 p in list)
             {
-                if (p.ExeName == ProcessName)
+                debug.Append(p.szExeFile + "\r\n");
+                if (p.szExeFile.ToLower() == ProcessName.ToLower())
                 {
-                    ProcessEnumerator.KillProcess(p.ID);
+                    ProcessEnumerator.KillProcess(p.th32ProcessID);
                     Process.Start("\\windows\\" + ProcessName, null);
                     break;
                 }
             }
+            MessageBox.Show(debug.ToString() + list.Count.ToString());
         }
 
         private void ReloadRunningApps()
@@ -91,12 +93,7 @@ namespace AutoRotationConfig
             //adding exceptions:
             windows.Add("CursorWindow");
             windows.Add("MS_SIPBUTTON");
-            windows.Add("FAKEIMEUI");
-            windows.Add("ms_sqlce_se_notify_wndproc");
-            windows.Add("Default Ime");
-            windows.Add("SchedConnNotify");
-            windows.Add("ConnMgrSink");
-            windows.Add("WinCENotify");
+
             foreach (string title in listBox.Items)
                 windows.Add(title);
             
@@ -110,7 +107,7 @@ namespace AutoRotationConfig
         private int CreateMenuItem(IntPtr handle, IntPtr param)
         {
             string title = ProcessEnumerator.GetWindowText(handle);
-            if (!string.IsNullOrEmpty(title) && !windows.Contains(title))
+            if (!string.IsNullOrEmpty(title) && !windows.Contains(title) && ProcessEnumerator.IsWindowVisible(handle))
             {
                 MenuItem m = new MenuItem();
                 m.Text = title.Replace("&", "&&");
@@ -160,6 +157,16 @@ namespace AutoRotationConfig
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             mnuRemove.Enabled = listBox.SelectedIndex >= 0;
+        }
+
+        private void Main_Activated(object sender, EventArgs e)
+        {
+            ReloadRunningApps();
+        }
+
+        private void Main_GotFocus(object sender, EventArgs e)
+        {
+
         }
 
     }

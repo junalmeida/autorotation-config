@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
+
 using System.Collections.Generic;
 using System.Text;
 
@@ -24,6 +25,7 @@ namespace AutoRotationConfig
 
 
         #region Structs
+        [StructLayout(LayoutKind.Sequential)]
         public struct PROCESSENTRY
         {
             public uint dwSize;
@@ -129,7 +131,9 @@ namespace AutoRotationConfig
             }
         }
         #endregion
-
+        [DllImport("coredll.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
 
         [DllImport("coredll.dll")]
         private static extern int GetClassName(IntPtr hWnd, StringBuilder buf, int nMaxCount);

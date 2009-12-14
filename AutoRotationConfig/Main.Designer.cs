@@ -77,6 +77,8 @@
             this.Menu = this.mainMenu1;
             this.Name = "Main";
             this.Text = "Rotation Config";
+            this.Activated += new System.EventHandler(this.Main_Activated);
+            this.GotFocus += new System.EventHandler(this.Main_GotFocus);
             this.ResumeLayout(false);
 
         }
