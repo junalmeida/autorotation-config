@@ -5,9 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.Win32;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace AutoRotationConfig
 {
@@ -19,74 +17,21 @@ namespace AutoRotationConfig
             LoadApps();
             ReloadRunningApps();
         }
+        RotationConfig config = new RotationConfig();
 
-        private const string RegPath = "Software\\AutoRotation";
-        private const string CountValue = "Count";
-        private const string ProcessName = "RotationSupport.exe";
-
-        private int TotalCount
-        {
-            get
-            {
-                RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(RegPath);
-                object countO = key.GetValue(CountValue);
-                return (countO == null ? 0 : (int)countO);
-            }
-            set
-            {
-                RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(RegPath, true);
-                key.SetValue(CountValue, value, RegistryValueKind.DWord);
-            }
-        }
 
         private void LoadApps()
         {
             listBox.Items.Clear();
-            RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(RegPath);
-#if DEBUG
-            if (key == null)
-                Microsoft.Win32.Registry.LocalMachine.CreateSubKey(RegPath);
-            key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(RegPath);
-#endif
 
-            if (key == null)
-                throw new NotSupportedException("This application only supports samsung devices.");
-
-            int count = TotalCount;
-
-            for (int i = 0; i < count; i++)
+            foreach (string app in config.Applications)
             {
-                object value = key.GetValue(i.ToString());
-                if (value != null)
-                    listBox.Items.Add(value);
+                    listBox.Items.Add(app);
             }
-            mnuRemove.Enabled = listBox.SelectedIndex >= 0;
+            mnuRemove.Enabled = false;
+            chkEnable.Checked = config.Enabled;
+       }
 
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            timer1.Enabled = false;
-            ReloadAutoRotate();
-        }
-
-        private void ReloadAutoRotate()
-        {
-            StringBuilder debug = new StringBuilder();
-
-            IList<OpenNETCF.ToolHelp.ProcessEntry> list = OpenNETCF.ToolHelp.ProcessEntry.GetProcesses();
-            foreach (OpenNETCF.ToolHelp.ProcessEntry p in list)
-            {
-                debug.Append(p.ExeFile + "\r\n");
-                if (p.ExeFile.ToLower() == ProcessName.ToLower())
-                {
-                    p.Kill();
-                    Process.Start("\\windows\\" + ProcessName, null);
-                    break;
-                }
-            }
-            MessageBox.Show(debug.ToString() + list.Count.ToString());
-        }
 
         private void ReloadRunningApps()
         {
@@ -107,51 +52,38 @@ namespace AutoRotationConfig
 
         private int CreateMenuItem(IntPtr handle, IntPtr param)
         {
-            string title = ProcessEnumerator.GetWindowText(handle);
-            if (!string.IsNullOrEmpty(title) && !windows.Contains(title) && ProcessEnumerator.IsWindowVisible(handle))
+            if (ProcessEnumerator.IsWindowVisible(handle))
             {
-                MenuItem m = new MenuItem();
-                m.Text = title.Replace("&", "&&");
-                m.Click += new EventHandler(m_Click);
-                mnuAdd.MenuItems.Add(m);
-                windows.Add(title);
-                mnuAdd.Enabled = true;
+                string title = ProcessEnumerator.GetWindowText(handle);
+                string className = ProcessEnumerator.GetWindowClass(handle);
+                if (!string.IsNullOrEmpty(title) && !windows.Contains(title))
+                {
+                    MenuItem m = new MenuItem();
+                    m.Text = title.Replace("&", "&&");
+                    m.Click += new EventHandler(m_Click);
+                    mnuAdd.MenuItems.Add(m);
+                    windows.Add(title);
+                    mnuAdd.Enabled = true;
+                }
             }
             return 1;
         }
 
         void m_Click(object sender, EventArgs e)
         {
-            AddTitle(((MenuItem)sender).Text.Replace("&&", "&"));
+            string title = ((MenuItem)sender).Text.Replace("&&", "&");
+            config.AddApplication(title);
+            listBox.Items.Add(title);
+
             ReloadRunningApps();
         }
 
-        private void AddTitle(string title)
-        {
-            int index = listBox.Items.Count + 1;
-
-            RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(RegPath, true);
-            key.SetValue(index.ToString(), title, RegistryValueKind.String);
-
-            listBox.Items.Add(title);
-
-            TotalCount = listBox.Items.Count;
-            timer1.Enabled = true;
-        }
 
         private void mnuRemove_Click(object sender, EventArgs e)
         {
+            config.RemoveApplication(listBox.SelectedIndex);
             listBox.Items.RemoveAt(listBox.SelectedIndex);
-            RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(RegPath, true);
-            foreach (string title in listBox.Items)
-                key.SetValue(listBox.Items.IndexOf(title).ToString(), title, RegistryValueKind.String);
-            try
-            {
-                key.DeleteValue((TotalCount - 1).ToString());
-            }
-            catch { }
-            TotalCount = listBox.Items.Count;
-            timer1.Enabled = true;
+
             ReloadRunningApps();
         }
 
@@ -168,6 +100,21 @@ namespace AutoRotationConfig
         private void Main_GotFocus(object sender, EventArgs e)
         {
 
+        }
+
+        private void Main_Closing(object sender, CancelEventArgs e)
+        {
+            config.ReloadRotationSupport();
+        }
+
+        private void Main_Deactivate(object sender, EventArgs e)
+        {
+            config.ReloadRotationSupport();
+        }
+
+        private void chkEnable_CheckStateChanged(object sender, EventArgs e)
+        {
+            config.Enabled = chkEnable.Checked;
         }
 
     }

@@ -33,7 +33,7 @@
             this.mnuAdd = new System.Windows.Forms.MenuItem();
             this.mnuRemove = new System.Windows.Forms.MenuItem();
             this.listBox = new System.Windows.Forms.ListBox();
-            this.timer1 = new System.Windows.Forms.Timer();
+            this.chkEnable = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -62,10 +62,14 @@
             this.listBox.TabIndex = 0;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             // 
-            // timer1
+            // chkEnable
             // 
-            this.timer1.Interval = 5000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.chkEnable.Location = new System.Drawing.Point(8, 32);
+            this.chkEnable.Name = "chkEnable";
+            this.chkEnable.Size = new System.Drawing.Size(100, 20);
+            this.chkEnable.TabIndex = 1;
+            this.chkEnable.Text = "Enabled";
+            this.chkEnable.CheckStateChanged += new System.EventHandler(this.chkEnable_CheckStateChanged);
             // 
             // Main
             // 
@@ -73,12 +77,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.chkEnable);
             this.Controls.Add(this.listBox);
             this.Menu = this.mainMenu1;
             this.Name = "Main";
             this.Text = "Rotation Config";
+            this.Deactivate += new System.EventHandler(this.Main_Deactivate);
             this.Activated += new System.EventHandler(this.Main_Activated);
             this.GotFocus += new System.EventHandler(this.Main_GotFocus);
+            this.Closing += new System.ComponentModel.CancelEventHandler(this.Main_Closing);
             this.ResumeLayout(false);
 
         }
@@ -88,7 +95,7 @@
         private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.MenuItem mnuAdd;
         private System.Windows.Forms.MenuItem mnuRemove;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.CheckBox chkEnable;
     }
 }
 

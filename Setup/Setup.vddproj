@@ -21,7 +21,7 @@
         "Entry"
         {
         "MsmKey" = "8:_0D0F4EAA25233516D888685D47FFE90C"
-        "OwnerKey" = "8:_D92128A046432DB89773A3F939AEF1C4"
+        "OwnerKey" = "8:_69E0FEDDF5B602866EDCAE0E657C4F71"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -75,7 +75,7 @@
         "Entry"
         {
         "MsmKey" = "8:_2AE60E8D3A0804E1B907544651AABDD4"
-        "OwnerKey" = "8:_D92128A046432DB89773A3F939AEF1C4"
+        "OwnerKey" = "8:_69E0FEDDF5B602866EDCAE0E657C4F71"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -93,7 +93,7 @@
         "Entry"
         {
         "MsmKey" = "8:_54314C555247AEECF14D21531E81BDE0"
-        "OwnerKey" = "8:_D92128A046432DB89773A3F939AEF1C4"
+        "OwnerKey" = "8:_69E0FEDDF5B602866EDCAE0E657C4F71"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -117,7 +117,13 @@
         "Entry"
         {
         "MsmKey" = "8:_6353BCE1E702F3E06071B8A769F0013A"
-        "OwnerKey" = "8:_D92128A046432DB89773A3F939AEF1C4"
+        "OwnerKey" = "8:_69E0FEDDF5B602866EDCAE0E657C4F71"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_69E0FEDDF5B602866EDCAE0E657C4F71"
+        "OwnerKey" = "8:_5CC28A13043D4BE9A13FAF52EE5E4C03"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -147,7 +153,7 @@
         "Entry"
         {
         "MsmKey" = "8:_BA7D093F9CC00BE6FA40BD5E532FE97A"
-        "OwnerKey" = "8:_D92128A046432DB89773A3F939AEF1C4"
+        "OwnerKey" = "8:_69E0FEDDF5B602866EDCAE0E657C4F71"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -174,12 +180,6 @@
         "OwnerKey" = "8:_2AE60E8D3A0804E1B907544651AABDD4"
         "MsmSig" = "8:_UNDEFINED"
         }
-        "Entry"
-        {
-        "MsmKey" = "8:_D92128A046432DB89773A3F939AEF1C4"
-        "OwnerKey" = "8:_5CC28A13043D4BE9A13FAF52EE5E4C03"
-        "MsmSig" = "8:_UNDEFINED"
-        }
     }
     "Configurations"
     {
@@ -188,7 +188,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\Setup.cab"
+        "OutputFilename" = "8:Debug\\AutoRotationConfig.cab"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
         "SignOutput" = "11:FALSE"
@@ -352,6 +352,34 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_69E0FEDDF5B602866EDCAE0E657C4F71"
+            {
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:OpenNETCF, Version=2.3.0.39, Culture=neutral, PublicKeyToken=e60dbea84bb431b7"
+                "ScatterAssemblies"
+                {
+                    "_69E0FEDDF5B602866EDCAE0E657C4F71"
+                    {
+                    "Name" = "8:OpenNETCF.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:OpenNETCF.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CB3EF229B45A45FCA8C9D72851AEC867"
+            "Condition" = "8:"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "Register" = "3:0"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_A33377960F748A85250EB7F3B050D996"
             {
             "AssemblyIsInGAC" = "11:FALSE"
@@ -408,34 +436,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{E4F2F62A-3940-4BF5-A031-F7FA98CAAFFA}:_D92128A046432DB89773A3F939AEF1C4"
-            {
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:OpenNETCF, Version=2.3.0.39, Culture=neutral, PublicKeyToken=e60dbea84bb431b7"
-                "ScatterAssemblies"
-                {
-                    "_D92128A046432DB89773A3F939AEF1C4"
-                    {
-                    "Name" = "8:OpenNETCF.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:OpenNETCF.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_5C87BB761D9642628878DF2C9FE37A74"
-            "Condition" = "8:"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "Register" = "3:0"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
         }
         "Folder"
         {
@@ -483,10 +483,10 @@
         {
             "{605BE39E-5046-48BD-AEC0-63C3A46626D5}:_5CC28A13043D4BE9A13FAF52EE5E4C03"
             {
-            "SourcePath" = "8:..\\AutoRotationConfig\\obj\\Release\\AutoRotationConfig.exe"
+            "SourcePath" = "8:..\\AutoRotationConfig\\obj\\Debug\\AutoRotationConfig.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_5C87BB761D9642628878DF2C9FE37A74"
+            "Folder" = "8:_CB3EF229B45A45FCA8C9D72851AEC867"
             "Condition" = "8:"
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
@@ -543,7 +543,7 @@
         }
         "Shortcut"
         {
-            "{971D45E9-E38C-49AC-B36E-4C5BEA533350}:_69B6DD8DDD0E4E6685E23EA5C18B3594"
+            "{971D45E9-E38C-49AC-B36E-4C5BEA533350}:_7FDFFE159FE84539B3FF3D718C1B868E"
             {
             "Name" = "8:AutoRotation Config"
             "Arguments" = "8:"
@@ -551,7 +551,7 @@
             "ShowCmd" = "3:1"
             "Target" = "8:_5CC28A13043D4BE9A13FAF52EE5E4C03"
             "Folder" = "8:_5474C8A5486B476A97891032FFBAAEF4"
-            "WorkingFolder" = "8:_5C87BB761D9642628878DF2C9FE37A74"
+            "WorkingFolder" = "8:_CB3EF229B45A45FCA8C9D72851AEC867"
             }
         }
     }
