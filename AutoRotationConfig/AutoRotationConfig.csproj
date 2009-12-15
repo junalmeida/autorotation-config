@@ -44,6 +44,7 @@
     <NativePlatformName>Windows Mobile 5.0 Pocket PC SDK</NativePlatformName>
     <FormFactorID>
     </FormFactorID>
+    <ApplicationIcon>autorotate.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugSamsung|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,6 +72,10 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fluid, Version=1.0.3300.37815, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Fluid.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="OpenNETCF, Version=2.3.0.39, Culture=neutral, PublicKeyToken=e60dbea84bb431b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -80,9 +85,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationList.cs" />
+    <Compile Include="Header.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +113,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RotationConfig.cs" />
+    <Compile Include="WelcomeScreen.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="16-em-check_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="close_toolbar_16x16.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="autorotate.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <ProjectExtensions>

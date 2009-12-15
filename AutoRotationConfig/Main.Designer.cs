@@ -29,11 +29,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.mnuAdd = new System.Windows.Forms.MenuItem();
             this.mnuRemove = new System.Windows.Forms.MenuItem();
-            this.listBox = new System.Windows.Forms.ListBox();
-            this.chkEnable = new System.Windows.Forms.CheckBox();
+            this.fluidHost = new Fluid.Controls.FluidHost();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -51,25 +51,14 @@
             this.mnuRemove.Text = "&Remove";
             this.mnuRemove.Click += new System.EventHandler(this.mnuRemove_Click);
             // 
-            // listBox
+            // fluidHost
             // 
-            this.listBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox.Location = new System.Drawing.Point(8, 58);
-            this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(224, 198);
-            this.listBox.TabIndex = 0;
-            this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
-            // 
-            // chkEnable
-            // 
-            this.chkEnable.Location = new System.Drawing.Point(8, 32);
-            this.chkEnable.Name = "chkEnable";
-            this.chkEnable.Size = new System.Drawing.Size(100, 20);
-            this.chkEnable.TabIndex = 1;
-            this.chkEnable.Text = "Enabled";
-            this.chkEnable.CheckStateChanged += new System.EventHandler(this.chkEnable_CheckStateChanged);
+            this.fluidHost.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fluidHost.Location = new System.Drawing.Point(0, 0);
+            this.fluidHost.Name = "fluidHost";
+            this.fluidHost.Size = new System.Drawing.Size(240, 268);
+            this.fluidHost.TabIndex = 2;
+            this.fluidHost.Text = "fluidHost1";
             // 
             // Main
             // 
@@ -77,8 +66,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
-            this.Controls.Add(this.chkEnable);
-            this.Controls.Add(this.listBox);
+            this.Controls.Add(this.fluidHost);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu1;
             this.Name = "Main";
             this.Text = "Rotation Config";
@@ -92,10 +81,9 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.MenuItem mnuAdd;
         private System.Windows.Forms.MenuItem mnuRemove;
-        private System.Windows.Forms.CheckBox chkEnable;
+        private Fluid.Controls.FluidHost fluidHost;
     }
 }
 

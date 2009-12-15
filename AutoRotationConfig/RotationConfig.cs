@@ -51,11 +51,37 @@ namespace AutoRotationConfig
             }
 #endif
             if (key == null)
-                throw new NotSupportedException("This application only supports samsung devices.");
+                throw new NotSupportedException(string.Format("This application only supports {0} devices.", Device.ToString()));
 
 
             return key;
         }
+
+        public bool FirstTime
+        {
+            get
+            {
+                RegistryKey key = GetKey(false);
+                try
+                {
+                    object val = key.GetValue("_FirstTime");
+                    return (val == null ? true : Convert.ToBoolean(val));
+                }
+                catch { throw; }
+                finally { key.Close(); }
+            }
+            set
+            {
+                RegistryKey key = GetKey(true);
+                try
+                {
+                    key.SetValue("_FirstTime", Convert.ToInt32(value), RegistryValueKind.DWord);
+                }
+                catch { throw; }
+                finally { key.Close(); }
+            }
+        }
+
 
         public bool Enabled
         {

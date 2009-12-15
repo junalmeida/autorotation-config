@@ -6,30 +6,76 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Fluid.Controls;
 
 namespace AutoRotationConfig
 {
     public partial class Main : Form
     {
+
+        RotationConfig config;
         public Main()
         {
             InitializeComponent();
+
+            config = new RotationConfig();
+
+            fluidHost.Bounds = fluidHost.ClientBounds;
+            fluidHost.BackColor = Color.Empty;
+
+            if (config.FirstTime)
+            {
+                WelcomeScreen welcome = new WelcomeScreen();
+                welcome.Continue += new EventHandler(welcome_Continue);
+                welcome.ShowMaximized(ShowTransition.None);
+
+                config.FirstTime = false;
+            }
+            else
+            {
+                LoadList();
+            }
+
+        }
+
+        void welcome_Continue(object sender, EventArgs e)
+        {
+            LoadList();
+        }
+
+        private void LoadList()
+        {
+            list = new ApplicationList();
+            list.ShowMaximized(ShowTransition.FromBottom);
+            list.SelectedIndexChanged += new EventHandler(list_SelectedIndexChanged);
+            list.CheckedChanged += new EventHandler(list_CheckedChanged);
             LoadApps();
             ReloadRunningApps();
         }
-        RotationConfig config = new RotationConfig();
+
+        void list_CheckedChanged(object sender, EventArgs e)
+        {
+            config.Enabled = list.Checked;
+        }
+
+        ApplicationList list;
+
+
+
 
 
         private void LoadApps()
         {
-            listBox.Items.Clear();
-
-            foreach (string app in config.Applications)
-            {
-                    listBox.Items.Add(app);
-            }
             mnuRemove.Enabled = false;
-            chkEnable.Checked = config.Enabled;
+            //list.Checked = config.Enabled;
+            int oldIndex = list.SelectedIndex;
+            list.DataSource = config.Applications;
+            if (oldIndex > list.Count - 1)
+                oldIndex = list.Count - 1;
+            list.SelectedIndex = oldIndex;
+            mnuRemove.Enabled = list.SelectedIndex >= 0;
+
+            list.Checked = config.Enabled;
        }
 
 
@@ -37,12 +83,9 @@ namespace AutoRotationConfig
         {
             windows.Clear();
             //adding exceptions:
-            windows.Add("CursorWindow");
             windows.Add("MS_SIPBUTTON");
-
-            foreach (string title in listBox.Items)
-                windows.Add(title);
-            
+            windows.AddRange(config.Applications);
+           
             mnuAdd.MenuItems.Clear();
             mnuAdd.Enabled = false;
             ProcessEnumerator.ListWindows(new ProcessEnumerator.EnumWindowsProc(CreateMenuItem));
@@ -73,23 +116,22 @@ namespace AutoRotationConfig
         {
             string title = ((MenuItem)sender).Text.Replace("&&", "&");
             config.AddApplication(title);
-            listBox.Items.Add(title);
 
+            LoadApps();
             ReloadRunningApps();
         }
 
 
         private void mnuRemove_Click(object sender, EventArgs e)
         {
-            config.RemoveApplication(listBox.SelectedIndex);
-            listBox.Items.RemoveAt(listBox.SelectedIndex);
-
+            config.RemoveApplication(list.SelectedIndex);
+            LoadApps();
             ReloadRunningApps();
         }
 
-        private void listBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void list_SelectedIndexChanged(object sender, EventArgs e)
         {
-            mnuRemove.Enabled = listBox.SelectedIndex >= 0;
+            mnuRemove.Enabled = list.SelectedIndex >= 0;
         }
 
         private void Main_Activated(object sender, EventArgs e)
@@ -112,10 +154,10 @@ namespace AutoRotationConfig
             config.ReloadRotationSupport();
         }
 
-        private void chkEnable_CheckStateChanged(object sender, EventArgs e)
-        {
-            config.Enabled = chkEnable.Checked;
-        }
+        //private void chkEnable_CheckStateChanged(object sender, EventArgs e)
+        //{
+        //    config.Enabled = chkEnable.Checked;
+        //}
 
     }
 }
