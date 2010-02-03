@@ -5,14 +5,15 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AutoRotation Config")]
+[assembly: AssemblyTitle("Auto-Rotate Config")]
 [assembly: AssemblyDescription("Configure auto-rotation on samsung devices.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ElInteractive")]
-[assembly: AssemblyProduct("AutoRotation Config")]
-[assembly: AssemblyCopyright("Copyright © Marcos Almeida Jr. 2009")]
+[assembly: AssemblyCompany("ElI")]
+[assembly: AssemblyProduct("Auto-Rotate Config")]
+[assembly: AssemblyCopyright("Marcos Almeida Jr. <junalmeida@gmail.com>")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
@@ -29,7 +30,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.1.*")]
 
 // Below attribute is to suppress FxCop warning "CA2232 : Microsoft.Usage : Add STAThreadAttribute to assembly"
 // as Device app does not support STA thread.

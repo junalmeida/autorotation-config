@@ -157,21 +157,43 @@ namespace AutoRotationConfig
             }
         }
 
+        public void CheckDevice()
+        {
+            bool found = false;
+#if SAMSUNG
+            RegistryKey key = Registry.LocalMachine.OpenSubKey("Ident");
+            found = (key != null && object.Equals(key.GetValue("OrigName"), "GT-I8000"));
+#endif
+#if DEBUG
+            found = true;
+#endif
+            if (!found)
+                throw new NotSupportedException("Your device is not supported by this application. Please, send a feature request.");
+        }
 
 
-        public void ReloadRotationSupport()
+        public bool ReloadRotationSupport()
         {
             IList<OpenNETCF.ToolHelp.ProcessEntry> list = OpenNETCF.ToolHelp.ProcessEntry.GetProcesses();
             foreach (OpenNETCF.ToolHelp.ProcessEntry p in list)
             {
                 if (p.ExeFile.ToLower() == ProcessName.ToLower())
                 {
-                    p.Kill();
-                    System.Threading.Thread.Sleep(2000);
-                    Process.Start("\\windows\\" + ProcessName, string.Empty);
-                    break;
+                    try
+                    {
+                        p.Kill();
+                        System.Threading.Thread.Sleep(2000);
+                        Process.Start("\\Windows\\" + ProcessName, string.Empty);
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
                 }
+
             }
+            return false;
         }
 
         public void AddApplication(string title)
