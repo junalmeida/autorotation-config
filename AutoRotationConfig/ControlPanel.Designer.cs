@@ -33,7 +33,7 @@
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.mnuAdd = new System.Windows.Forms.MenuItem();
             this.mnuRemove = new System.Windows.Forms.MenuItem();
-            this.tabs = new System.Windows.Forms.TabControl();
+            this.tabs = new Tenor.Mobile.UI.TabStrip();
             this.tabApps = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.tabAbout = new System.Windows.Forms.TabPage();
@@ -41,7 +41,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.appList = new AutoRotationConfig.KListControl();
+            this.appList = new Tenor.Mobile.UI.KListControl();
             this.tabs.SuspendLayout();
             this.tabApps.SuspendLayout();
             this.tabAbout.SuspendLayout();
@@ -182,7 +182,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabs;
+        private Tenor.Mobile.UI.TabStrip tabs;
         private System.Windows.Forms.TabPage tabApps;
         private System.Windows.Forms.TabPage tabAbout;
         private System.Windows.Forms.Label label1;
@@ -191,7 +191,7 @@
         private System.Windows.Forms.MenuItem mnuAdd;
         private System.Windows.Forms.MenuItem mnuRemove;
         private System.Windows.Forms.Label label3;
-        private KListControl appList;
+        private Tenor.Mobile.UI.KListControl appList;
         private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

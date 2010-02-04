@@ -51,10 +51,12 @@ namespace AutoRotationConfig
             mnuRemove.Enabled = false;
             //list.Checked = config.Enabled;
 
-            int oldIndex = (appList.SelectedItem == null ? 0 : appList.SelectedItem.YIndex);
+            //int oldIndex = (appList.SelectedItem == null ? 0 : appList.SelectedItem.YIndex);
             appList.Clear();
+            appList.DrawSeparators = true;
             foreach (string app in config.Applications)
             {
+                //new AppListItem(app);
                 appList.AddItem(app, app);
             }
         }
@@ -142,8 +144,6 @@ namespace AutoRotationConfig
             config = new RotationConfig();
             config.CheckDevice();
             LoadConfiguredApps();
-
-            AdjustTabControl();
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
@@ -151,46 +151,11 @@ namespace AutoRotationConfig
             base.OnPaintBackground(e);
         }
 
-        bool styleDone = false;
-        private void AdjustTabControl()
-        {
-            try
-            {
-                int baseHeight = 20;
-                int newHeight = Convert.ToInt32(baseHeight * factor.Height);
-
-                IntPtr window = NativeMethods.GetWindow(tabs.Handle, NativeMethods.GW.CHILD);
-                int num = NativeMethods.SendMessage(window, NativeMethods.WMSG.TCM_SETITEMSIZE, 0, NativeMethods.MakeLParam(new Point(0, newHeight)));
-
-                int offset = 11;
-                if (factor.Height > 1)
-                    foreach (TabPage t in tabs.TabPages)
-                    {
-                        t.Text = string.Format("  {0}  ", t.Text);
-                        NativeMethods.SetWindowPos(t.Handle, IntPtr.Zero, 0, 0, t.Width, t.Height - (newHeight - baseHeight) + offset, NativeMethods.SWP.SWP_NOACTIVATE | NativeMethods.SWP.SWP_NOMOVE | NativeMethods.SWP.SWP_NOREPOSITION | NativeMethods.SWP.SWP_NOZORDER);
-                    }
-
-                if (!styleDone)
-                {
-                    num = NativeMethods.GetWindowLong(window, NativeMethods.GWL.STYLE).ToInt32();
-                    num = NativeMethods.SetWindowLong(window, NativeMethods.GWL.STYLE, (int)(num | 0x4000));
-                    styleDone = true;
-                }
-
-            }
-            catch (Win32Exception)
-            { }
-
-        }
-
         private SizeF factor;
-
         protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
         {
             this.factor = factor;
             base.ScaleControl(factor, specified);
-
-            appList.ItemHeight = Convert.ToInt32(appList.ItemHeight * factor.Height);
         }
 
 

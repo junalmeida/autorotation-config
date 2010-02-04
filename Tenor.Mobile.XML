@@ -1,0 +1,339 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tenor.Mobile</name>
+    </assembly>
+    <members>
+        <member name="T:Tenor.Mobile.UI.KListControl">
+            <summary>
+            A Kinetic list control.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tenor.Mobile.UI.KListControl"/> class.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources used by the <see cref="T:System.Windows.Forms.Control"></see> and its child controls and optionally releases the managed resources.
+            </summary>
+            <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.AddItem(System.String,System.Object)">
+            <summary>
+            Adds an item.
+            </summary>
+            <param name="text">The text for the item.</param>
+            <param name="value">A value related to the item.</param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.AddItem(System.Int32,System.Int32,System.String,System.Object)">
+            <summary>
+            Adds an item.
+            </summary>
+            <param name="x">The x position.</param>
+            <param name="y">The y position.</param>
+            <param name="text">The text for the item.</param>
+            <param name="value">A value related to the item.</param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.AddItem(Tenor.Mobile.UI.IKListItem)">
+            <summary>
+            Adds an item.
+            </summary>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.RemoveItem(Tenor.Mobile.UI.IKListItem)">
+            <summary>
+            Removes an item.
+            </summary>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.Clear">
+            <summary>
+            Clears the list.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.Invalidate(Tenor.Mobile.UI.IKListItem)">
+            <summary>
+            Invalidates the item (when visible).
+            </summary>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.BeginUpdate">
+            <summary>
+            Begins updates - suspending layout recalculation.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.EndUpdate">
+            <summary>
+            Ends updates - re-enabling layout recalculation.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.OnResize(System.EventArgs)">
+            <summary>
+            Called when the control is resized.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.m_timer_Tick(System.Object,System.EventArgs)">
+            <summary>
+            Handles the Tick event of the m_timer control.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Paints the background of the control.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Paints the control.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.OnMouseDown(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Called when the user clicks on the control with the mouse.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.OnMouseMove(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Called when the user moves the mouse over the control.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.OnMouseUp(System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            Called when the user releases a mouse button.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.Reset">
+            <summary>
+            Resets the drawing of the list.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.CleanupBackBuffer">
+            <summary>
+            Cleans up the background paint buffer.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.CreateBackBuffer">
+            <summary>
+            Creates the background paint buffer.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.ClipScrollPosition">
+            <summary>
+            Clips the scroll position.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.ClipVelocity">
+            <summary>
+            Clips the velocity.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.ItemBounds(System.Int32,System.Int32)">
+            <summary>
+            Finds the bounds for the specified item.
+            </summary>
+            <param name="x">The item x index.</param>
+            <param name="y">The item y index.</param>
+            <returns>The item bounds.</returns>
+        </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.FindIndex(System.Int32,System.Int32)">
+            <summary>
+            Finds the index for the specified y offset.
+            </summary>
+            <param name="x">The x offset.</param>
+            <param name="y">The y offset.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.DrawSeparators">
+            <summary>
+            Controls whether to draw separators between list items.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.SeparatorColor">
+            <summary>
+            Gets or sets the color of the separators.
+            </summary>
+        </member>
+        <member name="E:Tenor.Mobile.UI.KListControl.SelectedItemChanged">
+            <summary>
+            Occurs when the selected item changes.
+            </summary>
+        </member>
+        <member name="E:Tenor.Mobile.UI.KListControl.SelectedItemClicked">
+            <summary>
+            Occurs when the selected item is clicked on (after already being selected).
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.Item(System.Int32)">
+            <summary>
+            Gets the <see cref="T:Tenor.Mobile.UI.IKListItem"/> at the specified index.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets the <see cref="T:Tenor.Mobile.UI.IKListItem"/> at the specified index.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.SelectedIndex">
+            <summary>
+            The selected index.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.SelectedItem">
+            <summary>
+            Gets the selected item.
+            </summary>
+            <value>The selected item.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.Count">
+            <summary>
+            Gets the item count.
+            </summary>
+            <value>The count.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.MaxVelocity">
+            <summary>
+            Gets or sets the maximum scroll velocity.
+            </summary>
+            <value>The maximum velocity.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.ItemHeight">
+            <summary>
+            Gets or sets the height of items in the control.
+            </summary>
+            <value>The height of the items.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.ItemWidth">
+            <summary>
+            Gets or sets the height of items in the control.
+            </summary>
+            <value>The height of the items.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.Layout">
+            <summary>
+            Gets or sets the layout.
+            </summary>
+            <value>The layout.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.MaxXOffset">
+            <summary>
+            Gets the maximum x offset.
+            </summary>
+            <value>The maximum x offset.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.KListControl.MaxYOffset">
+            <summary>
+            Gets the maximum y offset.
+            </summary>
+            <value>The maximum y offset.</value>
+        </member>
+        <member name="T:Tenor.Mobile.UI.IKListItem">
+            <summary>
+            Interface for items contained within the list.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.IKListItem.Render(System.Drawing.Graphics,System.Drawing.Rectangle)">
+            <summary>
+            Renders the specified graphics object.
+            </summary>
+            <param name="g">The graphics.</param>
+            <param name="bounds">The bounds.</param>
+        </member>
+        <member name="P:Tenor.Mobile.UI.IKListItem.Parent">
+            <summary>
+            Gets or sets the parent.
+            </summary>
+            <value>The parent.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.IKListItem.Bounds">
+            <summary>
+            The unscrolled bounds for this item.
+            </summary>
+        </member>
+        <member name="P:Tenor.Mobile.UI.IKListItem.XIndex">
+            <summary>
+            Gets or sets the X.
+            </summary>
+            <value>The X.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.IKListItem.YIndex">
+            <summary>
+            Gets or sets the Y.
+            </summary>
+            <value>The Y.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.IKListItem.Selected">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:Tenor.Mobile.UI.IKListItem"/> is selected.
+            </summary>
+            <value><c>true</c> if selected; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.IKListItem.Text">
+            <summary>
+            Gets or sets the text.
+            </summary>
+            <value>The text.</value>
+        </member>
+        <member name="P:Tenor.Mobile.UI.IKListItem.Value">
+            <summary>
+            Gets or sets the value.
+            </summary>
+            <value>The value.</value>
+        </member>
+        <member name="T:Tenor.Mobile.UI.KListLayout">
+            <summary>
+            Layout Mode.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.KListLayout.Vertical">
+            <summary>
+            Vertically scrolling list.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.KListLayout.Horizontal">
+            <summary>
+            Horizontally scrolling list.
+            </summary>
+        </member>
+        <member name="F:Tenor.Mobile.UI.KListLayout.Grid">
+            <summary>
+            Scrolling grid.
+            </summary>
+        </member>
+        <member name="T:Tenor.Mobile.UI.TabStrip">
+            <summary>
+            The TabControl style for new WM 6.5 devices.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.#ctor">
+            <summary>
+            Creates a new instance of the TabStrip.
+            </summary>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.ScaleControl(System.Drawing.SizeF,System.Windows.Forms.BoundsSpecified)">
+            <summary>
+            Scales a control's location, size, padding and margin.
+            </summary>
+            <param name="factor"></param>
+            <param name="specified"></param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Raises the Paint event.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Tenor.Mobile.UI.TabStrip.OnHandleCreated(System.EventArgs)">
+            <summary>
+            Raises the HandleCreated event.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:Tenor.Mobile.UI.TabStrip.EnableStyles">
+            <summary>
+            Enables or disables the new visual style of WM 6.5.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -84,6 +84,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
+    <Reference Include="Tenor.Mobile, Version=0.1.3687.17541, Culture=neutral, PublicKeyToken=104fb1972ff14a0a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Tenor.Mobile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlPanel.cs">
@@ -92,11 +96,7 @@
     <Compile Include="ControlPanel.Designer.cs">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="KListControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="AppListItem.cs" />
-    <Compile Include="NativeMethods.cs" />
     <Compile Include="ProcessEnumerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,28 +5,19 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+using Tenor.Mobile.UI;
 namespace AutoRotationConfig
 {
     /// <summary>
     /// A basic implementation of the IKListItem interface.
     /// </summary>
-    public class AppListItem : KListControl.IKListItem, IDisposable
+    public class AppListItem : IKListItem
     {
-        /// <summary>
-        /// Initializes the <see cref="KListItem"/> class.
-        /// </summary>
-        static AppListItem()
+        public AppListItem(string app)
         {
+            Text = app;
+            Value = app;
         }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public virtual void Dispose()
-        {
-            m_parent = null;
-        }
-
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="KListItem"/> is selected.
         /// </summary>
@@ -78,29 +69,6 @@ namespace AutoRotationConfig
         {
             PaintListItem(g, bounds);
             DrawAppName(g, bounds);
-
-            //FreeStore.Forms.ApplicationList appList = this.Parent.Parent as FreeStore.Forms.ApplicationList;
-            //if (appList != null && Application != null)
-            //{
-            //    switch (appList.ContentType)
-            //    {
-            //        case ContentType.Description:
-            //            DrawDescription(g, bounds);
-            //            break;
-            //        case ContentType.InstalledApplication:
-            //            DrawInstalledApp(g, bounds);
-            //            break;
-            //        case ContentType.Download:
-            //            DrawDownloadStatus(g, bounds);
-            //            break;
-            //        default:
-            //            break;
-            //    }
-            //}
-            //else if (Category != null)
-            //{
-            //    DrawCategory(g, bounds);
-            //}
         }
 
 
