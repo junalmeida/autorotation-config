@@ -157,18 +157,25 @@ namespace AutoRotationConfig
             }
         }
 
-        public void CheckDevice()
+        private static string[] supportedDevices = new string[] { "GT-I8000", "SCH-I920" };
+        public static void CheckDevice()
         {
-            bool found = false;
+#if DEBUG
+            return;
+#else
 #if SAMSUNG
             RegistryKey key = Registry.LocalMachine.OpenSubKey("Ident");
-            found = (key != null && object.Equals(key.GetValue("OrigName"), "GT-I8000"));
+            foreach (string device in supportedDevices)
+            {
+                if (key != null && 
+                    key.GetValue("OrigName") != null && 
+                    object.Equals(((string)key.GetValue("OrigName")).ToUpper(), device)
+                    )
+                    return;
+            }
 #endif
-#if DEBUG
-            found = true;
+            throw new NotSupportedException("Your device is not supported by this application. Please, send a feature request.");
 #endif
-            if (!found)
-                throw new NotSupportedException("Your device is not supported by this application. Please, send a feature request.");
         }
 
 

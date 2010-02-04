@@ -318,9 +318,9 @@
             <param name="factor"></param>
             <param name="specified"></param>
         </member>
-        <member name="M:Tenor.Mobile.UI.TabStrip.OnPaint(System.Windows.Forms.PaintEventArgs)">
+        <member name="M:Tenor.Mobile.UI.TabStrip.OnResize(System.EventArgs)">
             <summary>
-            Raises the Paint event.
+            Raises the Resize event.
             </summary>
             <param name="e"></param>
         </member>
@@ -329,11 +329,6 @@
             Raises the HandleCreated event.
             </summary>
             <param name="e"></param>
-        </member>
-        <member name="P:Tenor.Mobile.UI.TabStrip.EnableStyles">
-            <summary>
-            Enables or disables the new visual style of WM 6.5.
-            </summary>
         </member>
     </members>
 </doc>

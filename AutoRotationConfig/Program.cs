@@ -13,6 +13,15 @@ namespace AutoRotationConfig
         [MTAThread]
         static void Main()
         {
+            try
+            {
+                RotationConfig.CheckDevice();
+            }
+            catch (NotSupportedException ex)
+            {
+                MessageBox.Show(ex.Message, "Auto-Rotate Config");
+                return;
+            }
             Application.Run(new ControlPanel());
         }
     }

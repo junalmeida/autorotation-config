@@ -135,14 +135,13 @@ namespace AutoRotationConfig
             Cursor.Current = Cursors.Default;
             Cursor.Show();
             if (message)
-                MessageBox.Show("Your changes will be applied after a soft-reset.", "Auto-Rotate");
+                MessageBox.Show("Your changes may be applied after a soft-reset. If not, your phone's built-in g-sensor is disabled.", "Auto-Rotate");
 
         }
 
         private void ControlPanel_Load(object sender, EventArgs e)
         {
             config = new RotationConfig();
-            config.CheckDevice();
             LoadConfiguredApps();
         }
 
