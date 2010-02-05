@@ -15,14 +15,13 @@ namespace AutoRotationConfig
         {
             try
             {
-                RotationConfig.CheckDevice();
+                Application.Run(new ControlPanel());
             }
             catch (NotSupportedException ex)
             {
                 MessageBox.Show(ex.Message, "Auto-Rotate Config");
                 return;
             }
-            Application.Run(new ControlPanel());
         }
     }
 }

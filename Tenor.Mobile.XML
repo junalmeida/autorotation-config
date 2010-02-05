@@ -14,6 +14,12 @@
             Initializes a new instance of the <see cref="T:Tenor.Mobile.UI.KListControl"/> class.
             </summary>
         </member>
+        <member name="M:Tenor.Mobile.UI.KListControl.OnParentChanged(System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="e"></param>
+        </member>
         <member name="M:Tenor.Mobile.UI.KListControl.Dispose(System.Boolean)">
             <summary>
             Releases the unmanaged resources used by the <see cref="T:System.Windows.Forms.Control"></see> and its child controls and optionally releases the managed resources.
