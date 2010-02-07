@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Win32;
-using System.Diagnostics;
+using Tenor.Mobile.Diagnostics;
 
 namespace AutoRotationConfig
 {
@@ -29,7 +29,7 @@ namespace AutoRotationConfig
         const string RegPath = "Software\\AutoRotation";
         const string CountValue = "Count";
         const string DisabledValue = "disable";
-        const string ProcessName = "RotationSupport.exe";
+        const string ProcessName = "\\Windows\\RotationSupport.exe";
 #else
 
 #endif
@@ -51,7 +51,7 @@ namespace AutoRotationConfig
             }
 #endif
             if (key == null)
-                throw new NotSupportedException(string.Format("This application only supports {0} devices.", Device.ToString()));
+                throw new NotSupportedException("Built-in rotation support was not found on this device.");
 
 
             return key;
@@ -135,11 +135,11 @@ namespace AutoRotationConfig
         }
 
 
-        public string[] Applications
+        public AppDetails[] Applications
         {
             get
             {
-                List<string> lista = new List<string>();
+                List<AppDetails> lista = new List<AppDetails>();
                 RegistryKey key = GetKey(false);
                 try
                 {
@@ -147,11 +147,16 @@ namespace AutoRotationConfig
                     {
                         object value = key.GetValue(i.ToString());
                         if (value != null)
-                            lista.Add(value.ToString());
+                        {
+                            AppDetails app = new AppDetails() { Title = value.ToString() };
+                            value = key.GetValue(app.Title);
+                            if (value != null)
+                                app.PossibleLocations.AddRange(value.ToString().Split(','));
+                            lista.Add(app);
+                        }
                     }
                     return lista.ToArray();
                 }
-                catch { throw; }
                 finally { key.Close(); }
 
             }
@@ -181,16 +186,16 @@ namespace AutoRotationConfig
 
         public bool ReloadRotationSupport()
         {
-            IList<OpenNETCF.ToolHelp.ProcessEntry> list = OpenNETCF.ToolHelp.ProcessEntry.GetProcesses();
-            foreach (OpenNETCF.ToolHelp.ProcessEntry p in list)
+            IList<Process> list = Tenor.Mobile.Diagnostics.Process.GetProcesses();
+            foreach (Tenor.Mobile.Diagnostics.Process p in list)
             {
-                if (p.ExeFile.ToLower() == ProcessName.ToLower())
+                if (p.FileName.ToLower() == ProcessName.ToLower())
                 {
                     try
                     {
                         p.Kill();
                         System.Threading.Thread.Sleep(2000);
-                        Process.Start("\\Windows\\" + ProcessName, string.Empty);
+                        Process.Start(p.FileName, string.Empty);
                         return true;
                     }
                     catch
@@ -203,7 +208,7 @@ namespace AutoRotationConfig
             return false;
         }
 
-        public void AddApplication(string title)
+        public void AddApplication(RunningApp app)
         {
             RegistryKey key = GetKey(true);
             try
@@ -211,8 +216,9 @@ namespace AutoRotationConfig
 
                 int index = Applications.Length;
 
-                key.SetValue(index.ToString(), title, RegistryValueKind.String);
+                key.SetValue(index.ToString(), app.Title, RegistryValueKind.String);
 
+                key.SetValue(app.Title, app.Process.FileName);
 
                 TotalCount = index + 1;
             }
@@ -226,12 +232,12 @@ namespace AutoRotationConfig
             RegistryKey key = GetKey(true);
             try
             {
-                List<string> currentApps = new List<string>(Applications);
+                List<AppDetails> currentApps = new List<AppDetails>(Applications);
                 int indexToRemove = currentApps.Count - 1; 
                 currentApps.RemoveAt(index);
 
                 for (int i = 0; i < currentApps.Count; i++ )
-                    key.SetValue(i.ToString(), currentApps[i], RegistryValueKind.String);
+                    key.SetValue(i.ToString(), currentApps[i].Title, RegistryValueKind.String);
                 
                 try
                 {
@@ -240,7 +246,6 @@ namespace AutoRotationConfig
                 catch { }
                 TotalCount = currentApps.Count;
             }
-            catch { throw; }
             finally { key.Close(); }
         }
     }

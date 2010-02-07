@@ -35,13 +35,12 @@
             this.mnuRemove = new System.Windows.Forms.MenuItem();
             this.tabs = new Tenor.Mobile.UI.TabStrip();
             this.tabApps = new System.Windows.Forms.TabPage();
+            this.appList = new Tenor.Mobile.UI.KListControl();
             this.label1 = new System.Windows.Forms.Label();
             this.tabAbout = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.appList = new Tenor.Mobile.UI.KListControl();
             this.tabs.SuspendLayout();
             this.tabApps.SuspendLayout();
             this.tabAbout.SuspendLayout();
@@ -83,6 +82,21 @@
             this.tabApps.Size = new System.Drawing.Size(240, 221);
             this.tabApps.Text = "Applications";
             // 
+            // appList
+            // 
+            this.appList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.appList.ForeColor = System.Drawing.SystemColors.InactiveBorder;
+            this.appList.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
+            this.appList.Location = new System.Drawing.Point(0, 0);
+            this.appList.Name = "appList";
+            this.appList.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
+            this.appList.Size = new System.Drawing.Size(240, 185);
+            this.appList.TabIndex = 1;
+            this.appList.SelectedItemChanged += new System.EventHandler(this.appList_SelectedItemChanged);
+            this.appList.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.appList_DrawItem);
+            // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -96,28 +110,19 @@
             // 
             // tabAbout
             // 
-            this.tabAbout.Controls.Add(this.pictureBox1);
             this.tabAbout.Controls.Add(this.label3);
             this.tabAbout.Location = new System.Drawing.Point(0, 0);
             this.tabAbout.Name = "tabAbout";
             this.tabAbout.Size = new System.Drawing.Size(240, 221);
             this.tabAbout.Text = "About";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(96, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox1.Visible = false;
-            // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(2, 49);
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Location = new System.Drawing.Point(7, 28);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(237, 122);
+            this.label3.Size = new System.Drawing.Size(230, 193);
             this.label3.Text = "Auto-Rotate Configuration\r\nfor Pocket PC\r\n\r\nMarcos Almeida Jr. <junalmeida@gmail." +
                 "com>\r\n\r\nThis program is provided as freeware and is distributed as-is without wa" +
                 "rranty.\t";
@@ -144,19 +149,6 @@
             this.label2.Size = new System.Drawing.Size(109, 14);
             this.label2.Text = "Auto-Rotate";
             // 
-            // appList
-            // 
-            this.appList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.appList.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.appList.ItemHeight = 28;
-            this.appList.Location = new System.Drawing.Point(0, 0);
-            this.appList.Name = "appList";
-            this.appList.Size = new System.Drawing.Size(240, 185);
-            this.appList.TabIndex = 1;
-            this.appList.SelectedItemChanged += new System.EventHandler(this.appList_SelectedItemChanged);
-            // 
             // ControlPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -165,6 +157,7 @@
             this.ClientSize = new System.Drawing.Size(240, 268);
             this.Controls.Add(this.tabs);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu1;
             this.MinimizeBox = false;
             this.Name = "ControlPanel";
@@ -192,6 +185,5 @@
         private System.Windows.Forms.MenuItem mnuRemove;
         private System.Windows.Forms.Label label3;
         private Tenor.Mobile.UI.KListControl appList;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
