@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using Tenor.Mobile.Diagnostics;
+using Tenor.Mobile.UI;
+using AutoRotationConfig.Properties;
 
 namespace AutoRotationConfig
 {
@@ -17,32 +19,50 @@ namespace AutoRotationConfig
         {
             InitializeComponent();
 
+            Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(this);
+            Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(pnlHelp);
+            Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(pnlApplications);
+
+            titleStrip.Tabs.Add(new HeaderTab("Applications", Resources.app));
+            titleStrip.Tabs.Add(new HeaderTab("About", Resources.help));
+
+            pnlHelp.Visible = false;
+
+            pnlApplications.Dock = DockStyle.Fill;
+            pnlApplications.BringToFront();
+            pnlApplications.Visible = true;
+
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void titleStrip_SelectedTabChanged(object sender, EventArgs e)
         {
-            int height = Convert.ToInt32(1 * this.scaleFactor.Height);
-            Rectangle rect = new Rectangle(e.ClipRectangle.Left, panel1.Bottom - height, e.ClipRectangle.Width, height);
-            if (e.ClipRectangle.IntersectsWith(rect))
+            switch (titleStrip.SelectedIndex)
             {
-                e.Graphics.FillRectangle(new SolidBrush(SystemColors.ControlText), rect);
+                case 0:
+                    pnlHelp.Visible = false;
+
+                    pnlApplications.Dock = DockStyle.Fill;
+                    pnlApplications.BringToFront();
+                    pnlApplications.Visible = true;
+
+                    LoadConfiguredApps();
+                    LoadRunningApps();
+
+                    break;
+                case 1:
+                    pnlApplications.Visible = false;
+                    pnlHelp.Dock = DockStyle.Fill;
+                    pnlHelp.BringToFront();
+                    pnlHelp.Visible = true;
+
+                    mnuAdd.Enabled = false;
+                    mnuRemove.Enabled = false;
+                    break;
+
             }
         }
 
 
-        private void tabs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tabs.SelectedIndex == 0)
-            {
-                LoadConfiguredApps();
-                LoadRunningApps();
-            }
-            else
-            {
-                mnuAdd.Enabled = false;
-                mnuRemove.Enabled = false;
-            }
-        }
 
         RotationConfig config;
 
@@ -170,6 +190,7 @@ namespace AutoRotationConfig
             base.ScaleControl(factor, specified);
         }
 
+        Font f = new Font(FontFamily.GenericSansSerif, 12F, FontStyle.Regular);
         private void appList_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
             AppDetails app = (AppDetails)e.Item.Value;
@@ -184,10 +205,10 @@ namespace AutoRotationConfig
             SolidBrush textBrush;
             if (e.Item.Selected)
             {
-                SolidBrush backBrush;
-                backBrush = new SolidBrush(SystemColors.Highlight);
+                //SolidBrush backBrush;
+                //backBrush = new SolidBrush(SystemColors.Highlight);
+                //g.FillRectangle(backBrush, e.Bounds);
                 textBrush = new SolidBrush(SystemColors.HighlightText);
-                g.FillRectangle(backBrush, e.Bounds);
             }
             else
             {
@@ -196,11 +217,11 @@ namespace AutoRotationConfig
             }
             int iconWidth = Convert.ToInt32(39 * scaleFactor.Width);
             Rectangle rect = e.Bounds;
-            rect.X += iconWidth;
-            rect.Width -= iconWidth;
+            rect.X += iconWidth + Convert.ToInt32(4 * scaleFactor.Width);
+            rect.Width -= iconWidth - Convert.ToInt32(4 * scaleFactor.Width);
 
 
-            g.DrawString(e.Item.Text, e.Item.Parent.Font, textBrush, rect, format);
+            g.DrawString(e.Item.Text, f, textBrush, rect, format);
             int offsetX = Convert.ToInt32(3 * scaleFactor.Width);
             int offsetY = Convert.ToInt32(3 * scaleFactor.Height);
 
@@ -217,6 +238,9 @@ namespace AutoRotationConfig
                     break;
                 }
             }
+
+            format.Dispose();
+            textBrush.Dispose();
 
         }
 
