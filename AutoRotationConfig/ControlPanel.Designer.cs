@@ -72,7 +72,7 @@
             this.label3.Location = new System.Drawing.Point(3, 25);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(212, 193);
-            this.label3.Text = "Auto-Rotate Configuration\r\nfor Pocket PC\r\n\r\nMarcos Almeida Jr. <junalmeida@gmail." +
+            this.label3.Text = "Auto-Rotate Configuration\r\nfor Samsung Pocket PC's\r\n\r\nMarcos Almeida Jr. <junalmeida@gmail." +
                 "com>\r\n\r\nThis program is provided as freeware and is distributed as-is without wa" +
                 "rranty.\t";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -138,7 +138,7 @@
             this.Menu = this.mainMenu1;
             this.MinimizeBox = false;
             this.Name = "ControlPanel";
-            this.Text = "Settings";
+            this.Text = "Auto-Rotate";
             this.Load += new System.EventHandler(this.ControlPanel_Load);
             this.Activated += new System.EventHandler(this.ControlPanel_Activated);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.ControlPanel_Closing);
