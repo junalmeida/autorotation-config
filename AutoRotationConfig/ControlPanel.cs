@@ -23,7 +23,7 @@ namespace AutoRotationConfig
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(pnlHelp);
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(pnlApplications);
 
-            titleStrip.Tabs.Add(new HeaderTab("Applications", Resources.app));
+            titleStrip.Tabs.Add(new HeaderTab("Applications", Resources.app_selected));
             titleStrip.Tabs.Add(new HeaderTab("About", Resources.help));
 
             pnlHelp.Visible = false;
@@ -39,6 +39,10 @@ namespace AutoRotationConfig
             switch (titleStrip.SelectedIndex)
             {
                 case 0:
+                    titleStrip.Tabs[0].Image = Resources.app_selected;
+                    titleStrip.Tabs[1].Image = Resources.help;
+
+
                     pnlHelp.Visible = false;
 
                     pnlApplications.Dock = DockStyle.Fill;
@@ -50,6 +54,9 @@ namespace AutoRotationConfig
 
                     break;
                 case 1:
+                    titleStrip.Tabs[0].Image = Resources.app;
+                    titleStrip.Tabs[1].Image = Resources.help_selected;
+
                     pnlApplications.Visible = false;
                     pnlHelp.Dock = DockStyle.Fill;
                     pnlHelp.BringToFront();
@@ -226,6 +233,27 @@ namespace AutoRotationConfig
             int offsetY = Convert.ToInt32(3 * scaleFactor.Height);
 
             List<string> fileNames = new List<string>(app.PossibleLocations.ToArray());
+            if (app.Title == "Notes")
+                fileNames.Add("\\Windows\\notes.exe");
+            else if (app.Title == "Word Mobile")
+                fileNames.Add("\\Windows\\pword.exe");
+            else if (app.Title == "Excel Mobile")
+                fileNames.Add("\\Windows\\pxl.exe");
+            else if (app.Title == "PowerPoint Mobile")
+                fileNames.Add("\\Windows\\ppt.exe");
+            else if (app.Title == "OneNote Mobile")
+                fileNames.Add("\\Windows\\OneNoteMobile.exe");
+            else if (app.Title == "Outlook E-mail")
+                fileNames.Add("\\Windows\\tmail.exe");
+            else if (app.Title == "Messaging")
+                fileNames.Add("\\Windows\\tmail.exe");
+            else if (app.Title == "Pictures & Videos")
+                fileNames.Insert(0, "\\Windows\\Start Menu\\Programs\\Pictures & Videos.lnk");
+            else if (app.Title == "Desktop")
+                fileNames.Insert(0, "\\Windows\\fexplore.exe");
+            else if (app.Title == "Phone")
+                fileNames.Insert(0, "\\Windows\\Start Menu\\Programs\\Phone.lnk");
+        
             fileNames.Add("\\Windows\\shell32.exe");
             foreach (string fileName in fileNames)
             {
