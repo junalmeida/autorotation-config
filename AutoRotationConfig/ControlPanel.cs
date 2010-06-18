@@ -94,11 +94,11 @@ namespace AutoRotationConfig
             LoadRunningApps();
         }
         List<string> windows = new List<string>();
-        List<Process> runningProc = new List<Process>();
+        List<RunningApp> runningWindows = new List<RunningApp>();
 
         private void LoadRunningApps()
         {
-            runningProc.Clear();
+            runningWindows.Clear();
             windows.Clear();
             //adding exceptions:
             windows.Add("MS_SIPBUTTON");
@@ -125,11 +125,18 @@ namespace AutoRotationConfig
                     {
                         if (p.Id == w.ProcessId)
                         {
-                            runningProc.Add(p); added = true;
+                            added = true;
+                            runningWindows.Add(new RunningApp()
+                            {
+                                Process= p,
+                                Title = w.Text,
+                                ClassName = w.ClassName
+                                
+                            });
                             break;
                         }
                     }
-                    if (!added) runningProc.Add(null);
+                    if (!added) runningWindows.Add(null);
                 }
             }
         }
@@ -141,9 +148,7 @@ namespace AutoRotationConfig
         private void WindowMenu_Click(object sender, EventArgs e)
         {
             MenuItem menu = ((MenuItem)sender);
-            string title = menu.Text.Replace("&&", "&");
-            RunningApp app = new RunningApp() { Title = title };
-            app.Process = runningProc[menu.Parent.MenuItems.IndexOf(menu)];
+            RunningApp app = runningWindows[menu.Parent.MenuItems.IndexOf(menu)];
             config.AddApplication(app);
 
             LoadConfiguredApps();
@@ -181,7 +186,7 @@ namespace AutoRotationConfig
 
         private void ControlPanel_Load(object sender, EventArgs e)
         {
-            config = new RotationConfig();
+            config = RotationConfig.Create();
             LoadConfiguredApps();
         }
 
@@ -215,12 +220,12 @@ namespace AutoRotationConfig
                 //SolidBrush backBrush;
                 //backBrush = new SolidBrush(SystemColors.Highlight);
                 //g.FillRectangle(backBrush, e.Bounds);
-                textBrush = new SolidBrush(SystemColors.HighlightText);
+                textBrush = new SolidBrush(Tenor.Mobile.UI.Skin.Current.TextHighLight);
             }
             else
             {
                 //backBrush = new SolidBrush(SystemColors.Window);
-                textBrush = new SolidBrush(SystemColors.ControlText);
+                textBrush = new SolidBrush(Tenor.Mobile.UI.Skin.Current.TextForeColor);
             }
             int iconWidth = Convert.ToInt32(39 * scaleFactor.Width);
             Rectangle rect = e.Bounds;

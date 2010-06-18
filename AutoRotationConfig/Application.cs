@@ -9,6 +9,7 @@ namespace AutoRotationConfig
     public class RunningApp
     {
         public string Title { get; set; }
+        public string ClassName { get; set; }
         public Process Process { get; set; }
     }
 
@@ -20,6 +21,7 @@ namespace AutoRotationConfig
             PossibleLocations = new List<string>();
         }
         public string Title { get; set; }
+        public string ClassName { get; set; }
         public List<string> PossibleLocations { get; private set; }
     }
 }

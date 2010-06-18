@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Win32;
@@ -6,42 +7,22 @@ using Tenor.Mobile.Diagnostics;
 
 namespace AutoRotationConfig
 {
-    public enum Device
+    class Samsung : RotationConfig
     {
-        Samsung,
-        Htc
-    }
 
-    public class RotationConfig
-    {
-        public Device Device
-        {
-            get
-            {
-#if SAMSUNG
-                return Device.Samsung;
-#else
-                return Device.Htc;
-#endif
-            }
-        }
-#if SAMSUNG
         const string RegPath = "Software\\AutoRotation";
         const string CountValue = "Count";
         const string DisabledValue = "disable";
         const string ProcessName = "\\Windows\\RotationSupport.exe";
-#else
-
-#endif
 
 
-        private RegistryKey GetKey(bool write)
+        public override Device Device
+        { get { return Device.Samsung; } }
+
+
+        protected override Microsoft.Win32.RegistryKey GetKey(bool write)
         {
-#if SAMSUNG
             RegistryKey key = Microsoft.Win32.Registry.LocalMachine;
-#else
-            RegistryKey key = Microsoft.Win32.Registry.CurrentUser;
-#endif
             key = key.OpenSubKey(RegPath, write);
 #if DEBUG
             if (key == null)
@@ -53,33 +34,7 @@ namespace AutoRotationConfig
             if (key == null)
                 throw new NotSupportedException("Built-in rotation support was not found on this device.");
 
-
             return key;
-        }
-
-        public bool FirstTime
-        {
-            get
-            {
-                RegistryKey key = GetKey(false);
-                try
-                {
-                    object val = key.GetValue("_FirstTime");
-                    return (val == null ? true : Convert.ToBoolean(val));
-                }
-                catch { throw; }
-                finally { key.Close(); }
-            }
-            set
-            {
-                RegistryKey key = GetKey(true);
-                try
-                {
-                    key.SetValue("_FirstTime", Convert.ToInt32(value), RegistryValueKind.DWord);
-                }
-                catch { throw; }
-                finally { key.Close(); }
-            }
         }
 
 
@@ -108,7 +63,10 @@ namespace AutoRotationConfig
             }
         }
 
-         
+
+
+
+
         public int TotalCount
         {
             get
@@ -135,7 +93,7 @@ namespace AutoRotationConfig
         }
 
 
-        public AppDetails[] Applications
+        public override AppDetails[] Applications
         {
             get
             {
@@ -162,29 +120,8 @@ namespace AutoRotationConfig
             }
         }
 
-        private static string[] supportedDevices = new string[] { "GT-I8000", "SCH-I920" };
-        public static void CheckDevice()
-        {
-#if DEBUG
-            return;
-#else
-#if SAMSUNG
-            RegistryKey key = Registry.LocalMachine.OpenSubKey("Ident");
-            foreach (string device in supportedDevices)
-            {
-                if (key != null && 
-                    key.GetValue("OrigName") != null && 
-                    object.Equals(((string)key.GetValue("OrigName")).ToUpper(), device)
-                    )
-                    return;
-            }
-#endif
-            throw new NotSupportedException("Your device is not supported by this application. Please, send a feature request.");
-#endif
-        }
 
-
-        public bool ReloadRotationSupport()
+        public override bool ReloadRotationSupport()
         {
             IList<Process> list = Tenor.Mobile.Diagnostics.Process.GetProcesses();
             foreach (Tenor.Mobile.Diagnostics.Process p in list)
@@ -208,7 +145,9 @@ namespace AutoRotationConfig
             return false;
         }
 
-        public void AddApplication(RunningApp app)
+
+
+        public override void AddApplication(RunningApp app)
         {
             RegistryKey key = GetKey(true);
             try
@@ -227,18 +166,18 @@ namespace AutoRotationConfig
 
         }
 
-        public void RemoveApplication(int index)
+        public override void RemoveApplication(int index)
         {
             RegistryKey key = GetKey(true);
             try
             {
                 List<AppDetails> currentApps = new List<AppDetails>(Applications);
-                int indexToRemove = currentApps.Count - 1; 
+                int indexToRemove = currentApps.Count - 1;
                 currentApps.RemoveAt(index);
 
-                for (int i = 0; i < currentApps.Count; i++ )
+                for (int i = 0; i < currentApps.Count; i++)
                     key.SetValue(i.ToString(), currentApps[i].Title, RegistryValueKind.String);
-                
+
                 try
                 {
                     key.DeleteValue(indexToRemove.ToString());
@@ -248,5 +187,7 @@ namespace AutoRotationConfig
             }
             finally { key.Close(); }
         }
+
+
     }
 }

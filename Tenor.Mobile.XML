@@ -1099,6 +1099,17 @@
             Occurs when the connection is suspended due to a device operation such as a call.
             </summary>
         </member>
+        <member name="M:Tenor.Mobile.Device.Device.Vibrate(System.Int32)">
+            <summary>
+            Vibrates the device for milliseconds on <paramref name="timeout"/>.
+            </summary>
+            <param name="timeout">Timeout in milliseconds.</param>
+        </member>
+        <member name="P:Tenor.Mobile.Device.Device.OemInfo">
+            <summary>
+            Gets the string os OEM.
+            </summary>
+        </member>
         <member name="T:Tenor.Mobile.UI.Samsung">
             <summary>
             Render controls using Samsung's default interface style.
@@ -1321,17 +1332,6 @@
         <member name="M:Tenor.Mobile.Drawing.AlphaImage.DrawImage(System.IO.Stream,System.Drawing.Rectangle,System.Drawing.Graphics,System.Drawing.Rectangle)">
             <summary>
             Draws an image with alpha blending.
-            </summary>
-        </member>
-        <member name="M:Tenor.Mobile.Device.Device.Vibrate(System.Int32)">
-            <summary>
-            Vibrates the device for milliseconds on <paramref name="timeout"/>.
-            </summary>
-            <param name="timeout">Timeout in milliseconds.</param>
-        </member>
-        <member name="P:Tenor.Mobile.Device.Device.OemInfo">
-            <summary>
-            Gets the string os OEM.
             </summary>
         </member>
     </members>
