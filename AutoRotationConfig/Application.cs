@@ -6,7 +6,7 @@ using Tenor.Mobile.Diagnostics;
 
 namespace AutoRotationConfig
 {
-    public class RunningApp
+    class RunningApp
     {
         public string Title { get; set; }
         public string ClassName { get; set; }
@@ -14,7 +14,7 @@ namespace AutoRotationConfig
     }
 
     [Serializable]
-    public class AppDetails
+    class AppDetails
     {
         public AppDetails()
         {

@@ -33,14 +33,9 @@
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.mnuAdd = new System.Windows.Forms.MenuItem();
             this.mnuRemove = new System.Windows.Forms.MenuItem();
-            this.pnlHelp = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.pnlApplications = new System.Windows.Forms.Panel();
-            this.appList = new Tenor.Mobile.UI.KListControl();
-            this.label1 = new System.Windows.Forms.Label();
             this.titleStrip = new Tenor.Mobile.UI.HeaderStrip();
-            this.pnlHelp.SuspendLayout();
-            this.pnlApplications.SuspendLayout();
+            this.ucApplications = new AutoRotationConfig.ApplicationList();
+            this.ucHelp = new AutoRotationConfig.Help();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -55,64 +50,6 @@
             // mnuRemove
             // 
             this.mnuRemove.Text = "&Remove";
-            this.mnuRemove.Click += new System.EventHandler(this.mnuRemove_Click);
-            // 
-            // pnlHelp
-            // 
-            this.pnlHelp.Controls.Add(this.label3);
-            this.pnlHelp.Location = new System.Drawing.Point(42, 44);
-            this.pnlHelp.Name = "pnlHelp";
-            this.pnlHelp.Size = new System.Drawing.Size(195, 197);
-            this.pnlHelp.Visible = false;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(3, 25);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(189, 193);
-            this.label3.Text = "Auto-Rotate Configuration\r\nfor Samsung Pocket PC\'s\r\n\r\nMarcos Almeida Jr. <junalme" +
-                "ida@gmail.com>\r\n\r\nThis program is provided as freeware and is distributed as-is " +
-                "without warranty.\t";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // pnlApplications
-            // 
-            this.pnlApplications.Controls.Add(this.appList);
-            this.pnlApplications.Controls.Add(this.label1);
-            this.pnlApplications.Location = new System.Drawing.Point(3, 63);
-            this.pnlApplications.Name = "pnlApplications";
-            this.pnlApplications.Size = new System.Drawing.Size(186, 187);
-            this.pnlApplications.Visible = false;
-            // 
-            // appList
-            // 
-            this.appList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.appList.DefaultItemHeight = 38;
-            this.appList.DefaultItemWidth = 80;
-            this.appList.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.appList.Layout = Tenor.Mobile.UI.KListLayout.Vertical;
-            this.appList.Location = new System.Drawing.Point(0, 0);
-            this.appList.Name = "appList";
-            this.appList.SeparatorColor = System.Drawing.SystemColors.InactiveBorder;
-            this.appList.Size = new System.Drawing.Size(186, 150);
-            this.appList.TabIndex = 3;
-            this.appList.SelectedItemChanged += new System.EventHandler(this.appList_SelectedItemChanged);
-            this.appList.DrawItem += new Tenor.Mobile.UI.DrawItemEventHandler(this.appList_DrawItem);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular);
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label1.Location = new System.Drawing.Point(3, 153);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(178, 34);
-            this.label1.Text = "All applications on this list will be automatic rotated using device\'s g-sensor.";
             // 
             // titleStrip
             // 
@@ -124,14 +61,30 @@
             this.titleStrip.Text = "headerStrip1";
             this.titleStrip.SelectedTabChanged += new System.EventHandler(this.titleStrip_SelectedTabChanged);
             // 
+            // ucApplication
+            // 
+            this.ucApplications.Location = new System.Drawing.Point(15, 78);
+            this.ucApplications.Name = "ucApplication";
+            this.ucApplications.Size = new System.Drawing.Size(150, 150);
+            this.ucApplications.TabIndex = 4;
+            this.ucApplications.Visible = false;
+            // 
+            // ucHelp
+            // 
+            this.ucHelp.Location = new System.Drawing.Point(58, 55);
+            this.ucHelp.Name = "ucHelp";
+            this.ucHelp.Size = new System.Drawing.Size(150, 150);
+            this.ucHelp.TabIndex = 5;
+            this.ucHelp.Visible = false;
+            // 
             // ControlPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
-            this.Controls.Add(this.pnlApplications);
-            this.Controls.Add(this.pnlHelp);
+            this.Controls.Add(this.ucHelp);
+            this.Controls.Add(this.ucApplications);
             this.Controls.Add(this.titleStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu1;
@@ -139,10 +92,7 @@
             this.Name = "ControlPanel";
             this.Text = "Auto-Rotate";
             this.Load += new System.EventHandler(this.ControlPanel_Load);
-            this.Activated += new System.EventHandler(this.ControlPanel_Activated);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.ControlPanel_Closing);
-            this.pnlHelp.ResumeLayout(false);
-            this.pnlApplications.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -151,11 +101,8 @@
 
         private System.Windows.Forms.MenuItem mnuAdd;
         private System.Windows.Forms.MenuItem mnuRemove;
-        private System.Windows.Forms.Panel pnlHelp;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Panel pnlApplications;
-        private Tenor.Mobile.UI.KListControl appList;
-        private System.Windows.Forms.Label label1;
         private Tenor.Mobile.UI.HeaderStrip titleStrip;
+        private ApplicationList ucApplications;
+        private Help ucHelp;
     }
 }

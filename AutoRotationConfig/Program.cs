@@ -7,6 +7,21 @@ namespace AutoRotationConfig
 {
     static class Program
     {
+
+        static RotationConfig config;
+        internal static RotationConfig Config
+        {
+            get
+            {
+                return config;
+            }
+            set
+            {
+                config = value;
+            }
+        }
+
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -15,6 +30,7 @@ namespace AutoRotationConfig
         {
             try
             {
+                Config = RotationConfig.Create();
                 System.Windows.Forms.Application.Run(new ControlPanel());
             }
             catch (NotSupportedException ex)

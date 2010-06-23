@@ -19,11 +19,8 @@ namespace AutoRotationConfig
         private static string[] supportedHtcDevices = new string[] { };
         public static RotationConfig Create()
         {
-
-            //RegistryKey key = Registry.LocalMachine.OpenSubKey("Ident");
+            return new Samsung();
             string origName = Tenor.Mobile.Device.Device.OemInfo;
-            //if (key != null)
-                //origName = key.GetValue("OrigName").ToString().ToUpper();
 
             foreach (string device in supportedSamsungDevices)
             {
@@ -36,7 +33,7 @@ namespace AutoRotationConfig
                 if (object.Equals(origName, device))
                     return new Htc();
             }
-            throw new NotSupportedException("This device ('{0}') is not supported by this application. Please, send a feature request.");
+            throw new NotSupportedException(string.Format("{0} is not supported by this application. Please, send a feature request.", origName));
         }
 
 
