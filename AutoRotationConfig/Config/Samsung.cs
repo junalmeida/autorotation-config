@@ -19,6 +19,18 @@ namespace AutoRotationConfig
         public override Device Device
         { get { return Device.Samsung; } }
 
+        internal Samsung()
+        {
+            CheckKey();
+        }
+
+
+        private void CheckKey()
+        {
+            using (Microsoft.Win32.RegistryKey key = GetKey(false))
+            {
+            }
+        }
 
         protected override Microsoft.Win32.RegistryKey GetKey(bool write)
         {

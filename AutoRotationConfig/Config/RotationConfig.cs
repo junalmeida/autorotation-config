@@ -19,7 +19,6 @@ namespace AutoRotationConfig
         private static string[] supportedHtcDevices = new string[] { };
         public static RotationConfig Create()
         {
-            return new Samsung();
             string origName = Tenor.Mobile.Device.Device.OemInfo;
 
             foreach (string device in supportedSamsungDevices)

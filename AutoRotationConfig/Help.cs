@@ -15,11 +15,10 @@ namespace AutoRotationConfig
         {
             InitializeComponent();
 
-            Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(label3);
-            label3.ForeColor = Tenor.Mobile.UI.Skin.Current.TextForeColor;
-
+            Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(lblHelpText);
+            lblHelpText.ForeColor = Tenor.Mobile.UI.Skin.Current.TextForeColor;
+            lblHelpText.Text = string.Format(lblHelpText.Text, this.GetType().Assembly.GetName().Version);
         }
-
         
     }
 }

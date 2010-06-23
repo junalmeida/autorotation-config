@@ -23,8 +23,7 @@ namespace AutoRotationConfig
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(ucHelp);
             Tenor.Mobile.UI.Skin.Current.ApplyColorsToControl(ucApplications);
 
-            ucApplications.mnuRemove = this.mnuRemove;
-            ucApplications.mnuAdd = this.mnuAdd;
+            ucApplications.SetMenus(mnuAdd, mnuRemove);
 
             titleStrip.Tabs.Add(new HeaderTab("Applications", Resources.app_selected));
             titleStrip.Tabs.Add(new HeaderTab("About", Resources.help));
@@ -102,12 +101,6 @@ namespace AutoRotationConfig
             titleStrip.SelectedIndex = 0;
             titleStrip_SelectedTabChanged(titleStrip, new EventArgs());
         }
-
-
-
-
-
-
 
 
     }

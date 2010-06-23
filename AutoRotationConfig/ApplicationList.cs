@@ -31,14 +31,86 @@ namespace AutoRotationConfig
         public ApplicationList()
         {
             InitializeComponent();
+            SetPossibleLocations();
         }
 
-        internal MenuItem mnuRemove;
-        internal MenuItem mnuAdd;
+        MenuItem mnuRemove;
+        MenuItem mnuAdd;
+
+        internal void SetMenus(MenuItem left, MenuItem right)
+        {
+            mnuAdd = left;
+            mnuRemove = right;
+
+            mnuRemove.Click += new EventHandler(mnuRemove_Click);
+        }
+
+        void mnuRemove_Click(object sender, EventArgs e)
+        {
+            Remover();
+        }
 
 
 
+        Dictionary<string, string[]> possibleLocations;
+        private void SetPossibleLocations()
+        {
+            possibleLocations = new Dictionary<string, string[]>();
 
+            List<string> locations = new List<string>();
+
+            locations.Clear();
+            locations.Add("\\Windows\\notes.exe");
+            possibleLocations.Add("Notes", locations.ToArray());
+
+
+            locations.Clear();
+            locations.Add("\\Windows\\pword.exe");
+            possibleLocations.Add("Word Mobile", locations.ToArray());
+
+
+            locations.Clear();
+            locations.Add("\\Windows\\pxl.exe");
+            possibleLocations.Add("Excel Mobile", locations.ToArray());
+
+
+            locations.Clear();
+            locations.Add("\\Windows\\ppt.exe");
+            possibleLocations.Add("PowerPoint Mobile", locations.ToArray());
+
+
+            locations.Clear();
+            locations.Add("\\Windows\\OneNoteMobile.exe");
+            possibleLocations.Add("OneNote Mobile", locations.ToArray());
+
+            locations.Clear();
+            locations.Add("\\Windows\\tmail.exe");
+            possibleLocations.Add("Outlook E-mail", locations.ToArray());
+
+            locations.Clear();
+            locations.Add("\\Windows\\tmail.exe");
+            possibleLocations.Add("Messaging", locations.ToArray());
+
+            locations.Clear();
+            locations.Add("\\Windows\\Start Menu\\Programs\\Pictures & Videos.lnk");
+            possibleLocations.Add("Pictures & Videos", locations.ToArray());
+            
+            locations.Clear();
+            locations.Add("\\Windows\\fexplore.exe");
+            possibleLocations.Add("Desktop", locations.ToArray());
+
+            locations.Clear();
+            locations.Add("\\Windows\\Start Menu\\Programs\\Phone.lnk");
+            possibleLocations.Add("Phone", locations.ToArray());
+
+        }
+
+
+        StringFormat format = new StringFormat()
+        {
+            Alignment = StringAlignment.Near,
+            LineAlignment = StringAlignment.Center
+        };
         Font f = new Font(FontFamily.GenericSansSerif, 12F, FontStyle.Regular);
         private void appList_DrawItem(object sender, Tenor.Mobile.UI.DrawItemEventArgs e)
         {
@@ -48,9 +120,6 @@ namespace AutoRotationConfig
 
 
 
-            StringFormat format = new StringFormat();
-            format.Alignment = StringAlignment.Near;
-            format.LineAlignment = StringAlignment.Center;
             SolidBrush textBrush;
             if (e.Item.Selected)
             {
@@ -71,49 +140,44 @@ namespace AutoRotationConfig
 
 
             g.DrawString(e.Item.Text, f, textBrush, rect, format);
+
+            DrawIcon(app, e);
+
+            textBrush.Dispose();
+        }
+
+
+
+
+        private Dictionary<AppDetails, Icon> iconCache = new Dictionary<AppDetails, Icon>();
+        private void DrawIcon(AppDetails app, Tenor.Mobile.UI.DrawItemEventArgs e)
+        {
             int offsetX = Convert.ToInt32(3 * scaleFactor.Width);
             int offsetY = Convert.ToInt32(3 * scaleFactor.Height);
 
-            List<string> fileNames = new List<string>(app.PossibleLocations.ToArray());
-            if (app.Title == "Notes")
-                fileNames.Add("\\Windows\\notes.exe");
-            else if (app.Title == "Word Mobile")
-                fileNames.Add("\\Windows\\pword.exe");
-            else if (app.Title == "Excel Mobile")
-                fileNames.Add("\\Windows\\pxl.exe");
-            else if (app.Title == "PowerPoint Mobile")
-                fileNames.Add("\\Windows\\ppt.exe");
-            else if (app.Title == "OneNote Mobile")
-                fileNames.Add("\\Windows\\OneNoteMobile.exe");
-            else if (app.Title == "Outlook E-mail")
-                fileNames.Add("\\Windows\\tmail.exe");
-            else if (app.Title == "Messaging")
-                fileNames.Add("\\Windows\\tmail.exe");
-            else if (app.Title == "Pictures & Videos")
-                fileNames.Insert(0, "\\Windows\\Start Menu\\Programs\\Pictures & Videos.lnk");
-            else if (app.Title == "Desktop")
-                fileNames.Insert(0, "\\Windows\\fexplore.exe");
-            else if (app.Title == "Phone")
-                fileNames.Insert(0, "\\Windows\\Start Menu\\Programs\\Phone.lnk");
-
-            fileNames.Add("\\Windows\\shell32.exe");
-            foreach (string fileName in fileNames)
+            Icon icon = null;
+            if (iconCache.ContainsKey(app))
+                icon = iconCache[app];
+            else
             {
-                if (System.IO.File.Exists(fileName))
+                List<string> fileNames = new List<string>();
+                fileNames.AddRange(app.PossibleLocations);
+
+                if (possibleLocations.ContainsKey(app.Title))
+                    fileNames.AddRange(possibleLocations[app.Title]);
+                foreach (string fileName in fileNames)
                 {
-                    using (Icon icon = Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(fileName, true))
+                    if (System.IO.File.Exists(fileName))
                     {
-                        g.DrawIcon(icon, e.Bounds.X + offsetX, e.Bounds.Y + offsetY);
+                        icon = Tenor.Mobile.Drawing.IconHelper.ExtractAssociatedIcon(fileName, true);
+                        iconCache.Add(app, icon);
+                        break;
                     }
-                    break;
                 }
             }
 
-            format.Dispose();
-            textBrush.Dispose();
-
+            e.Graphics.DrawIcon(icon, e.Bounds.X + offsetX, e.Bounds.Y + offsetY);
         }
-
 
 
         public void LoadConfiguredApps()
@@ -141,6 +205,7 @@ namespace AutoRotationConfig
             windows.Clear();
             //adding exceptions:
             windows.Add("MS_SIPBUTTON");
+            windows.Add("CursorWindow");
             foreach (AppDetails app in Config.Applications)
                 windows.Add(app.Title);
 
@@ -184,22 +249,35 @@ namespace AutoRotationConfig
 
         private void WindowMenu_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
+            Cursor.Show();
+
             MenuItem menu = ((MenuItem)sender);
             RunningApp app = runningWindows[menu.Parent.MenuItems.IndexOf(menu)];
             Config.AddApplication(app);
 
             LoadConfiguredApps();
             LoadRunningApps();
+
+            Cursor.Current = Cursors.Default;
+            Cursor.Show();
         }
 
-        internal void Remover()
+        private void Remover()
         {
+            Cursor.Current = Cursors.WaitCursor;
+            Cursor.Show();
+
             if (appList.SelectedItem != null)
             {
                 Config.RemoveApplication(appList.SelectedItem.YIndex);
                 LoadConfiguredApps();
                 LoadRunningApps();
             }
+
+
+            Cursor.Current = Cursors.Default;
+            Cursor.Show();
         }
 
         private void appList_SelectedItemChanged(object sender, EventArgs e)

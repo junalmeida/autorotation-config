@@ -6,13 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Auto-Rotate Config")]
-#if SAMSUNG
-[assembly: AssemblyDescription("Configure auto-rotation on samsung devices.")]
-#else
-[assembly: AssemblyDescription("Configure auto-rotation on htc devices.")]
-#endif
+[assembly: AssemblyDescription("Configure auto-rotation on windows devices.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ElI")]
+[assembly: AssemblyCompany("Rising Mobility")]
 [assembly: AssemblyProduct("Auto-Rotate Config")]
 [assembly: AssemblyCopyright("Marcos Almeida Jr. <junalmeida@gmail.com>")]
 [assembly: AssemblyTrademark("")]
@@ -34,7 +30,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.1.0.*")]
+[assembly: AssemblyVersion("1.1.1.*")]
 
 // Below attribute is to suppress FxCop warning "CA2232 : Microsoft.Usage : Add STAThreadAttribute to assembly"
 // as Device app does not support STA thread.
