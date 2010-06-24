@@ -16,7 +16,7 @@ namespace AutoRotationConfig
         const string ProcessName = "\\Windows\\RotationSupport.exe";
 
 
-        public override Device Device
+        internal override Device Device
         { get { return Device.Samsung; } }
 
         internal Samsung()
@@ -32,7 +32,7 @@ namespace AutoRotationConfig
             }
         }
 
-        protected override Microsoft.Win32.RegistryKey GetKey(bool write)
+        private Microsoft.Win32.RegistryKey GetKey(bool write)
         {
             RegistryKey key = Microsoft.Win32.Registry.LocalMachine;
             key = key.OpenSubKey(RegPath, write);
@@ -50,7 +50,7 @@ namespace AutoRotationConfig
         }
 
 
-        public bool Enabled
+        internal bool Enabled
         {
             get
             {
@@ -79,7 +79,7 @@ namespace AutoRotationConfig
 
 
 
-        public int TotalCount
+        internal int TotalCount
         {
             get
             {
@@ -105,7 +105,7 @@ namespace AutoRotationConfig
         }
 
 
-        public override AppDetails[] Applications
+        internal override AppDetails[] Applications
         {
             get
             {
@@ -133,7 +133,7 @@ namespace AutoRotationConfig
         }
 
 
-        public override bool ReloadRotationSupport()
+        internal override bool ReloadRotationSupport()
         {
             IList<Process> list = Tenor.Mobile.Diagnostics.Process.GetProcesses();
             foreach (Tenor.Mobile.Diagnostics.Process p in list)
@@ -159,7 +159,7 @@ namespace AutoRotationConfig
 
 
 
-        public override void AddApplication(RunningApp app)
+        internal override void AddApplication(RunningApp app)
         {
             RegistryKey key = GetKey(true);
             try
@@ -178,7 +178,7 @@ namespace AutoRotationConfig
 
         }
 
-        public override void RemoveApplication(int index)
+        internal override void RemoveApplication(int index)
         {
             RegistryKey key = GetKey(true);
             try

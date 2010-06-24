@@ -31,7 +31,6 @@ namespace AutoRotationConfig
         public ApplicationList()
         {
             InitializeComponent();
-            SetPossibleLocations();
         }
 
         MenuItem mnuRemove;
@@ -52,58 +51,7 @@ namespace AutoRotationConfig
 
 
 
-        Dictionary<string, string[]> possibleLocations;
-        private void SetPossibleLocations()
-        {
-            possibleLocations = new Dictionary<string, string[]>();
 
-            List<string> locations = new List<string>();
-
-            locations.Clear();
-            locations.Add("\\Windows\\notes.exe");
-            possibleLocations.Add("Notes", locations.ToArray());
-
-
-            locations.Clear();
-            locations.Add("\\Windows\\pword.exe");
-            possibleLocations.Add("Word Mobile", locations.ToArray());
-
-
-            locations.Clear();
-            locations.Add("\\Windows\\pxl.exe");
-            possibleLocations.Add("Excel Mobile", locations.ToArray());
-
-
-            locations.Clear();
-            locations.Add("\\Windows\\ppt.exe");
-            possibleLocations.Add("PowerPoint Mobile", locations.ToArray());
-
-
-            locations.Clear();
-            locations.Add("\\Windows\\OneNoteMobile.exe");
-            possibleLocations.Add("OneNote Mobile", locations.ToArray());
-
-            locations.Clear();
-            locations.Add("\\Windows\\tmail.exe");
-            possibleLocations.Add("Outlook E-mail", locations.ToArray());
-
-            locations.Clear();
-            locations.Add("\\Windows\\tmail.exe");
-            possibleLocations.Add("Messaging", locations.ToArray());
-
-            locations.Clear();
-            locations.Add("\\Windows\\Start Menu\\Programs\\Pictures & Videos.lnk");
-            possibleLocations.Add("Pictures & Videos", locations.ToArray());
-            
-            locations.Clear();
-            locations.Add("\\Windows\\fexplore.exe");
-            possibleLocations.Add("Desktop", locations.ToArray());
-
-            locations.Clear();
-            locations.Add("\\Windows\\Start Menu\\Programs\\Phone.lnk");
-            possibleLocations.Add("Phone", locations.ToArray());
-
-        }
 
 
         StringFormat format = new StringFormat()
@@ -161,10 +109,11 @@ namespace AutoRotationConfig
             else
             {
                 List<string> fileNames = new List<string>();
+
+
+                fileNames.AddRange(Config.GetPossibleLocations(app.Title));
                 fileNames.AddRange(app.PossibleLocations);
 
-                if (possibleLocations.ContainsKey(app.Title))
-                    fileNames.AddRange(possibleLocations[app.Title]);
                 foreach (string fileName in fileNames)
                 {
                     if (System.IO.File.Exists(fileName))
@@ -175,8 +124,8 @@ namespace AutoRotationConfig
                     }
                 }
             }
-
-            e.Graphics.DrawIcon(icon, e.Bounds.X + offsetX, e.Bounds.Y + offsetY);
+            if (icon != null)
+                e.Graphics.DrawIcon(icon, e.Bounds.X + offsetX, e.Bounds.Y + offsetY);
         }
 
 
@@ -201,7 +150,6 @@ namespace AutoRotationConfig
         internal void LoadRunningApps()
         {
 
-            runningWindows.Clear();
             windows.Clear();
             //adding exceptions:
             windows.Add("MS_SIPBUTTON");
@@ -209,11 +157,19 @@ namespace AutoRotationConfig
             foreach (AppDetails app in Config.Applications)
                 windows.Add(app.Title);
 
+            runningWindows.Clear();
             mnuAdd.MenuItems.Clear();
             mnuAdd.Enabled = false;
 
             Process[] allProcs = Process.GetProcesses();
-            foreach (Tenor.Mobile.Diagnostics.Window w in Window.GetWindows())
+
+            List<Window> allWindows = new List<Window>(Window.GetWindows());
+            allWindows.Sort(new Comparison<Window>(delegate(Window a, Window b)
+            {
+                return string.Compare(a.Text, b.Text);
+            }));
+
+            foreach (Tenor.Mobile.Diagnostics.Window w in allWindows)
             {
                 if (w.Visible && !string.IsNullOrEmpty(w.Text) && !windows.Contains(w.Text))
                 {

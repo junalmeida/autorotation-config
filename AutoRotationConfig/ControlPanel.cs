@@ -102,6 +102,11 @@ namespace AutoRotationConfig
             titleStrip_SelectedTabChanged(titleStrip, new EventArgs());
         }
 
+        private void ControlPanel_Activated(object sender, EventArgs e)
+        {
+            ucApplications.LoadRunningApps();
+        }
+
 
     }
 }

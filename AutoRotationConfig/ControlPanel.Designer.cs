@@ -61,10 +61,10 @@
             this.titleStrip.Text = "headerStrip1";
             this.titleStrip.SelectedTabChanged += new System.EventHandler(this.titleStrip_SelectedTabChanged);
             // 
-            // ucApplication
+            // ucApplications
             // 
             this.ucApplications.Location = new System.Drawing.Point(15, 78);
-            this.ucApplications.Name = "ucApplication";
+            this.ucApplications.Name = "ucApplications";
             this.ucApplications.Size = new System.Drawing.Size(150, 150);
             this.ucApplications.TabIndex = 4;
             this.ucApplications.Visible = false;
@@ -92,6 +92,7 @@
             this.Name = "ControlPanel";
             this.Text = "Auto-Rotate";
             this.Load += new System.EventHandler(this.ControlPanel_Load);
+            this.Activated += new System.EventHandler(this.ControlPanel_Activated);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.ControlPanel_Closing);
             this.ResumeLayout(false);
 
