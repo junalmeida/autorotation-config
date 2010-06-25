@@ -11,7 +11,7 @@ namespace AutoRotationConfig
     {
 
         const string RegPath = "Software\\HTC\\HTCSENSOR\\GSensor\\WhiteList";
-        const string RegPathLocations = "Software\\HTC\\HTCSENSOR\\GSensor\\WhiteList\\Locations";
+        const string RegPathLocations = "Software\\HTC\\HTCSENSOR\\GSensor\\ModuleName";
 
         internal override Device Device
         {
@@ -166,18 +166,18 @@ HANDLE RegisterService(
 
         internal override bool ReloadRotationSupport()
         {
-            const string prefix = "SSS";
-            const string name = "SmiSensor";
+            //const string prefix = "SSS";
+            //const string name = "SmiSensor";
 
-            int handle = GetServiceHandle(prefix + "0:", null, 0);
-            if (handle > 0)
-            {
-                DeregisterService(handle);
-                handle = ActivateService(name, 0);
-                return handle > 0;
-            }
-            else
-                return false;
+            //int handle = GetServiceHandle(prefix + "0:", null, 0);
+            //if (handle > 0)
+            //{
+            //    DeregisterService(handle);
+            //    handle = ActivateService(name, 0);
+            //    return handle > 0;
+            //}
+            //else
+            return false;
         }
         #endregion
     }
