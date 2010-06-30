@@ -26,7 +26,7 @@ namespace AutoRotationConfig
 
             foreach (string device in supportedSamsungDevices)
             {
-                if (object.Equals(origName.ToUpper(), device))
+                if (string.Equals(origName.ToUpper(), device))
                     return new Samsung();
             }
 

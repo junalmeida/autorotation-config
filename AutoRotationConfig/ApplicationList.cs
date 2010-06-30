@@ -124,8 +124,12 @@ namespace AutoRotationConfig
                     }
                 }
             }
-            if (icon != null)
-                e.Graphics.DrawIcon(icon, e.Bounds.X + offsetX, e.Bounds.Y + offsetY);
+            try
+            {
+                if (icon != null)
+                    e.Graphics.DrawIcon(icon, e.Bounds.X + offsetX, e.Bounds.Y + offsetY);
+            }
+            catch { }
         }
 
 
