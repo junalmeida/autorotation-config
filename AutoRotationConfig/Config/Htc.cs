@@ -10,8 +10,9 @@ namespace AutoRotationConfig
     class Htc : RotationConfig
     {
 
-        const string RegPath = "Software\\HTC\\HTCSENSOR\\GSensor\\WhiteList";
-        const string RegPathLocations = "Software\\HTC\\HTCSENSOR\\GSensor\\ModuleName";
+        const string BaseRegPath =          "Software\\HTC\\HTCSENSOR\\GSensor";
+        const string RegPath =              "Software\\HTC\\HTCSENSOR\\GSensor\\WhiteList";
+        const string RegPathLocations =     "Software\\HTC\\HTCSENSOR\\GSensor\\ModuleName";
 
         internal override Device Device
         {
@@ -60,6 +61,53 @@ namespace AutoRotationConfig
 
             return key;
         }
+
+
+        private Microsoft.Win32.RegistryKey GetBaseKey(bool write)
+        {
+            RegistryKey key = Microsoft.Win32.Registry.CurrentUser;
+            key = key.OpenSubKey(BaseRegPath, write);
+
+#if DEBUG
+            if (key == null)
+            {
+                Microsoft.Win32.Registry.CurrentUser.CreateSubKey(BaseRegPath);
+                key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(BaseRegPath, write);
+            }
+#endif
+            if (key == null)
+                throw new NotSupportedException("Built-in rotation support was not found on this device.");
+
+            return key;
+        }
+
+
+        internal override bool Enabled
+        {
+            get
+            {
+                RegistryKey key = GetBaseKey(false);
+                try
+                {
+                    object enabled = key.GetValue("AutoRotation");
+                    return (enabled == null ? false : Convert.ToBoolean(enabled));
+                }
+                catch { throw; }
+                finally { key.Close(); }
+            }
+            set
+            {
+                RegistryKey key = GetBaseKey(true);
+                try
+                {
+                    key.SetValue("AutoRotation", Convert.ToInt32(value), RegistryValueKind.DWord);
+                }
+                catch { throw; }
+                finally { key.Close(); }
+            }
+        }
+
+
 
         internal override AppDetails[] Applications
         {

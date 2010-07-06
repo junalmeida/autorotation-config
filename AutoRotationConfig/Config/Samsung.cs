@@ -49,8 +49,10 @@ namespace AutoRotationConfig
             return key;
         }
 
+        
+        
 
-        internal bool Enabled
+        internal override bool Enabled
         {
             get
             {

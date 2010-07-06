@@ -15,6 +15,8 @@ namespace AutoRotationConfig
 {
     public partial class ControlPanel : Form
     {
+        internal static bool haveChanged = false;
+
         public ControlPanel()
         {
             InitializeComponent();
@@ -85,15 +87,24 @@ namespace AutoRotationConfig
 
         private void ControlPanel_Closing(object sender, CancelEventArgs e)
         {
-            bool message = false;
-            Cursor.Current = Cursors.WaitCursor;
-            Cursor.Show();
-            message = !Config.ReloadRotationSupport();
-            Cursor.Current = Cursors.Default;
-            Cursor.Show();
-            if (message)
-                MessageBox.Show("Your changes may be applied after a soft-reset. If not, your phone's built-in g-sensor is disabled.", "Auto-Rotate");
-
+            if (ControlPanel.haveChanged)
+            {
+                bool message = false;
+                Cursor.Current = Cursors.WaitCursor;
+                Cursor.Show();
+                Config.Enabled = true;
+                message = !Config.ReloadRotationSupport();
+                Cursor.Current = Cursors.Default;
+                Cursor.Show();
+                if (message)
+                {
+                    if (MessageBox.Show("Your changes may be applied after a soft-reset. If not, your phone's built-in g-sensor is disabled.\r\n\r\nDo you want to soft-reset now?", "Auto-Rotate", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) 
+                        == DialogResult.Yes)
+                    {
+                        Config.RestartSystem();
+                    }
+                }
+            }
         }
 
         private void ControlPanel_Load(object sender, EventArgs e)

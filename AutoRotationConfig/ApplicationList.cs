@@ -221,6 +221,7 @@ namespace AutoRotationConfig
 
             Cursor.Current = Cursors.Default;
             Cursor.Show();
+            ControlPanel.haveChanged = true;
         }
 
         private void Remover()
@@ -238,6 +239,7 @@ namespace AutoRotationConfig
 
             Cursor.Current = Cursors.Default;
             Cursor.Show();
+            ControlPanel.haveChanged = true;
         }
 
         private void appList_SelectedItemChanged(object sender, EventArgs e)

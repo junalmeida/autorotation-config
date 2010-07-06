@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Win32;
 using Tenor.Mobile.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace AutoRotationConfig
 {
@@ -16,7 +17,7 @@ namespace AutoRotationConfig
     internal abstract class RotationConfig
     {
 
-        private static string[] supportedSamsungDevices = new string[] { "GT-I8000", "SCH-I920" };
+        private static string[] supportedSamsungDevices = new string[] { "GT-I8000", "GT-I8000L", "SCH-I920" };
         private static string[] supportedHtcDevices = new string[] { "LEO" };
 
         internal static RotationConfig Create()
@@ -35,6 +36,9 @@ namespace AutoRotationConfig
                 return new Htc();
             }
 
+#if DEBUG
+            return new Htc();
+#endif
             throw new NotSupportedException(string.Format("{0} {1} is not supported by this application. Please, send a feature request.", manuf, origName));
         }
 
@@ -43,6 +47,8 @@ namespace AutoRotationConfig
         internal abstract Device Device { get; }
 
         internal abstract AppDetails[] Applications { get; }
+
+        internal abstract bool Enabled { get; set; }
 
 
         //public virtual bool FirstTime
@@ -71,6 +77,19 @@ namespace AutoRotationConfig
         //}
 
         internal abstract bool ReloadRotationSupport();
+
+
+
+        [DllImport("coredll.dll", SetLastError = true)]
+        private static extern int SetSystemPowerState(string psState, int stateFlags, int options);
+
+        const int POWER_FORCE = 4096;
+        const int POWER_STATE_RESET = 0x00800000;
+
+        internal void RestartSystem()
+        {
+            SetSystemPowerState(null, POWER_STATE_RESET, POWER_FORCE);
+        }
 
 
         internal abstract void AddApplication(RunningApp app);
